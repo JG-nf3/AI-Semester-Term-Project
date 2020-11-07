@@ -328,7 +328,7 @@ public class UI  extends JFrame {
                 // checks if a square and move is selected
                 if(selectedDir != -1 && selectedRow != -1){
                     // check if leagle move
-                    if(game.isLeagle(selectedRow, selectedCol, selectedDir)){
+                    if(game.isLegal(selectedRow, selectedCol, selectedDir)){
                         // next turn in game
                         game.nextTurn(selectedRow, selectedCol, selectedDir);
                         update();

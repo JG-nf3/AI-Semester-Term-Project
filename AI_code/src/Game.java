@@ -26,7 +26,7 @@ public class Game {
         return current;
     }
 
-    public boolean isLeagle(byte row, byte col, byte dir){
+    public boolean isLegal(byte row, byte col, byte dir){
         return current.validMove(row, col, dir) != 0;
     }
 
