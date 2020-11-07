@@ -3,8 +3,6 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class UI extends JFrame {
-    private JFrame frame;
-    private JButton square00;
     private JLabel currentTurn;
     private JButton[][] square;
     private JButton[] dir;
