@@ -47,7 +47,8 @@ public class Board {
      *            5 -> up right diagonally
      *            6 -> down left diagonally
      *            7 -> down right diagonally
-     * @returns 0 -> invalid move
+     * @return
+     * 0 -> invalid move
      * 1 -> valid move and can move 1 square
      * 2 -> valid move and can move 2 squares
      * 3 -> valid move and can move 3 squares
@@ -85,11 +86,11 @@ public class Board {
                             squaresBeforeRunOut--;
                         }
                     } else if (dir == 1) {
-                        // check if moving out of balance
+                        // check if moving out of bounds
                         if (row == 3) {
                             return spaceToMove;
                         }
-                        // check square has opponents stones
+                        // check if new square has opponents stones
                         row++;
                         if (stonePosition[row][col] < 0) {
                             return spaceToMove;
@@ -98,11 +99,11 @@ public class Board {
                             squaresBeforeRunOut--;
                         }
                     } else if (dir == 2) {
-                        // check if moving out of balance
+                        // check if moving out of bounds
                         if (col == 0) {
                             return spaceToMove;
                         }
-                        // check square has opponents stones
+                        // check if new square has opponents stones
                         col--;
                         if (stonePosition[row][col] < 0) {
                             return spaceToMove;
@@ -111,11 +112,11 @@ public class Board {
                             squaresBeforeRunOut--;
                         }
                     } else if (dir == 3) {
-                        // check if moving out of balance
+                        // check if moving out of bounds
                         if (col == 3) {
                             return spaceToMove;
                         }
-                        // check square has opponents stones
+                        // check if new square has opponents stones
                         col++;
                         if (stonePosition[row][col] < 0) {
                             return spaceToMove;
@@ -124,11 +125,11 @@ public class Board {
                             squaresBeforeRunOut--;
                         }
                     } else if (dir == 4) {
-                        // check if moving out of balance
+                        // check if moving out of bounds
                         if (row == 0 || col == 0) {
                             return spaceToMove;
                         }
-                        // check square has opponents stones
+                        // check if new square has opponents stones
                         row--;
                         col--;
                         if (stonePosition[row][col] < 0) {
@@ -138,11 +139,11 @@ public class Board {
                             squaresBeforeRunOut--;
                         }
                     } else if (dir == 5) {
-                        // check if moving out of balance
+                        // check if moving out of bounds
                         if (row == 0 || col == 3) {
                             return spaceToMove;
                         }
-                        // check square has opponents stones
+                        // check if new square has opponents stones
                         row--;
                         col++;
                         if (stonePosition[row][col] < 0) {
@@ -152,11 +153,11 @@ public class Board {
                             squaresBeforeRunOut--;
                         }
                     } else if (dir == 6) {
-                        // check if moving out of balance
+                        // check if moving out of bounds
                         if (row == 3 || col == 0) {
                             return spaceToMove;
                         }
-                        // check square has opponents stones
+                        // check if new square has opponents stones
                         row++;
                         col--;
                         if (stonePosition[row][col] < 0) {
@@ -166,11 +167,11 @@ public class Board {
                             squaresBeforeRunOut--;
                         }
                     } else if (dir == 7) {
-                        // check if moving out of balance
+                        // check if moving out of bounds
                         if (row == 3 || col == 3) {
                             return spaceToMove;
                         }
-                        // check square has opponents stones
+                        // check if new square has opponents stones
                         row++;
                         col++;
                         if (stonePosition[row][col] < 0) {
@@ -182,11 +183,10 @@ public class Board {
                     }
                 }
             }
-        }
-        // for player2 turn
-        else {
+        } else {
+            // Player 2's turn
             if (stonePosition[row][col] < 0) {
-                // section to see how many squares before run out
+                // see how many squares before we run out of stones
                 byte squaresBeforeRunOut;
                 if (stonePosition[row][col] < -3) {
                     squaresBeforeRunOut = 3;
@@ -196,15 +196,14 @@ public class Board {
                     squaresBeforeRunOut = 1;
                 }
 
-
-                // section check for moves
-                if (dir == 0) {
-                    while (squaresBeforeRunOut > 0) {
-                        // check if moving out of balance
+                // check for moves
+                while (squaresBeforeRunOut > 0) {
+                    if (dir == 0) {
+                        // check if moving out of bounds
                         if (row == 0) {
                             return spaceToMove;
                         }
-                        // check square has opponents stones
+                        // check if new square has opponents stones
                         row--;
                         if (stonePosition[row][col] > 0) {
                             return spaceToMove;
@@ -212,14 +211,12 @@ public class Board {
                             spaceToMove++;
                             squaresBeforeRunOut--;
                         }
-                    }
-                } else if (dir == 1) {
-                    while (squaresBeforeRunOut > 0) {
-                        // check if moving out of balance
+                    } else if (dir == 1) {
+                        // check if moving out of bounds
                         if (row == 3) {
                             return spaceToMove;
                         }
-                        // check square has opponents stones
+                        // check if new square has opponents stones
                         row++;
                         if (stonePosition[row][col] > 0) {
                             return spaceToMove;
@@ -227,14 +224,12 @@ public class Board {
                             spaceToMove++;
                             squaresBeforeRunOut--;
                         }
-                    }
-                } else if (dir == 2) {
-                    while (squaresBeforeRunOut > 0) {
-                        // check if moving out of balance
+                    } else if (dir == 2) {
+                        // check if moving out of bounds
                         if (col == 0) {
                             return spaceToMove;
                         }
-                        // check square has opponents stones
+                        // check if new square has opponents stones
                         col--;
                         if (stonePosition[row][col] > 0) {
                             return spaceToMove;
@@ -242,14 +237,12 @@ public class Board {
                             spaceToMove++;
                             squaresBeforeRunOut--;
                         }
-                    }
-                } else if (dir == 3) {
-                    while (squaresBeforeRunOut > 0) {
-                        // check if moving out of balance
+                    } else if (dir == 3) {
+                        // check if moving out of bounds
                         if (col == 3) {
                             return spaceToMove;
                         }
-                        // check square has opponents stones
+                        // check if new square has opponents stones
                         col++;
                         if (stonePosition[row][col] > 0) {
                             return spaceToMove;
@@ -257,14 +250,12 @@ public class Board {
                             spaceToMove++;
                             squaresBeforeRunOut--;
                         }
-                    }
-                } else if (dir == 4) {
-                    while (squaresBeforeRunOut > 0) {
-                        // check if moving out of balance
+                    } else if (dir == 4) {
+                        // check if moving out of bounds
                         if (row == 0 || col == 0) {
                             return spaceToMove;
                         }
-                        // check square has opponents stones
+                        // check if new square has opponents stones
                         row--;
                         col--;
                         if (stonePosition[row][col] > 0) {
@@ -273,14 +264,12 @@ public class Board {
                             spaceToMove++;
                             squaresBeforeRunOut--;
                         }
-                    }
-                } else if (dir == 5) {
-                    while (squaresBeforeRunOut > 0) {
-                        // check if moving out of balance
+                    } else if (dir == 5) {
+                        // check if moving out of bounds
                         if (row == 0 || col == 3) {
                             return spaceToMove;
                         }
-                        // check square has opponents stones
+                        // check if new square has opponents stones
                         row--;
                         col++;
                         if (stonePosition[row][col] > 0) {
@@ -289,14 +278,12 @@ public class Board {
                             spaceToMove++;
                             squaresBeforeRunOut--;
                         }
-                    }
-                } else if (dir == 6) {
-                    while (squaresBeforeRunOut > 0) {
-                        // check if moving out of balance
+                    } else if (dir == 6) {
+                        // check if moving out of bounds
                         if (row == 3 || col == 0) {
                             return spaceToMove;
                         }
-                        // check square has opponents stones
+                        // check if new square has opponents stones
                         row++;
                         col--;
                         if (stonePosition[row][col] > 0) {
@@ -305,14 +292,12 @@ public class Board {
                             spaceToMove++;
                             squaresBeforeRunOut--;
                         }
-                    }
-                } else if (dir == 7) {
-                    while (squaresBeforeRunOut > 0) {
-                        // check if moving out of balance
+                    } else if (dir == 7) {
+                        // check if moving out of bounds
                         if (row == 3 || col == 3) {
                             return spaceToMove;
                         }
-                        // check square has opponents stones
+                        // check if new square has opponents stones
                         row++;
                         col++;
                         if (stonePosition[row][col] > 0) {
