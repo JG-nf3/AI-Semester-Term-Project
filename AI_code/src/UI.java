@@ -104,63 +104,57 @@ public class UI extends JFrame {
             for (int col = 0; col < square[row].length; col++) {
                 int finalRow = row;
                 int finalCol = col;
-                square[row][col].addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        setButtonSquareBlank();
-                        selectedRow = (byte) finalRow;
-                        selectedCol = (byte) finalCol;
-                        square[finalRow][finalCol].setBackground(Color.RED);
-                        square[finalRow][finalCol].setOpaque(true);
-                    }
+                square[row][col].addActionListener(e -> {
+                    clearSquareBGs();
+                    selectedRow = (byte) finalRow;
+                    selectedCol = (byte) finalCol;
+                    square[finalRow][finalCol].setBackground(Color.RED);
+                    square[finalRow][finalCol].setOpaque(true);
                 });
             }
         }
 
         for (int i = 0; i < dir.length; i++) {
             int finalI = i;
-            dir[i].addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    setButtonDirBlank();
-                    selectedDir = (byte) finalI;
-                    dir[finalI].setBackground(Color.RED);
-                    dir[finalI].setOpaque(true);
-                }
+            dir[i].addActionListener(e -> {
+                clearDirBGs();
+                selectedDir = (byte) finalI;
+                dir[finalI].setBackground(Color.RED);
+                dir[finalI].setOpaque(true);
             });
         }
 
-        move.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // checks if a square and move is selected
-                if (selectedDir != -1 && selectedRow != -1) {
-                    // check if legal move
-                    if (game.isLegal(selectedRow, selectedCol, selectedDir)) {
-                        // next turn in game
-                        game.nextTurn(selectedRow, selectedCol, selectedDir);
-                        update();
+        move.addActionListener(e -> {
+            // checks if a square and move is selected
+            if (selectedDir != -1 && selectedRow != -1) {
+                // check if legal move
+                if (game.isLegal(selectedRow, selectedCol, selectedDir)) {
+                    // next turn in game
+                    game.nextTurn(selectedRow, selectedCol, selectedDir);
+                    update();
 
-                        // set buttons blank and clear selected info
-                        setButtonSquareBlank();
-                        setButtonDirBlank();
-                        selectedRow = -1;
-                        selectedCol = -1;
-                        selectedDir = -1;
+                    // set buttons blank and clear selected info
+                    clearSquareBGs();
+                    clearDirBGs();
+                    selectedRow = -1;
+                    selectedCol = -1;
+                    selectedDir = -1;
 
-                        //checks if game is done
-                        if (game.isOver()) {
-                            if (game.getBoard().getPlayer1Turn()) {
-                                currentTurn.setText("Player 2 WINS");
-                            } else {
-                                currentTurn.setText("Player 1 WINS");
-                            }
+                    //checks if game is done
+                    if (game.isOver()) {
+                        if (game.getBoard().getPlayer1Turn()) {
+                            currentTurn.setText("Player 2 WINS");
+                        } else {
+                            currentTurn.setText("Player 1 WINS");
                         }
+                    }
 
-                        // if game not done then update whose turn
-                        else {
-                            if (currentTurn.getText().equals("Player 1 turn")) {
-                                currentTurn.setText("Player 2 turn");
-                            } else {
-                                currentTurn.setText("Player 1 turn");
-                            }
+                    // if game isn't done then update whose turn it is
+                    else {
+                        if (currentTurn.getText().equals("Player 1 turn")) {
+                            currentTurn.setText("Player 2 turn");
+                        } else {
+                            currentTurn.setText("Player 1 turn");
                         }
                     }
                 }
@@ -168,7 +162,7 @@ public class UI extends JFrame {
         });
     }
 
-    private void setButtonSquareBlank() {
+    private void clearSquareBGs() {
         for (int row = 0; row < square.length; row++) {
             for (int col = 0; col < square[row].length; col++) {
                 square[row][col].setBackground(null);
@@ -177,7 +171,7 @@ public class UI extends JFrame {
         }
     }
 
-    private void setButtonDirBlank() {
+    private void clearDirBGs() {
         for (int i = 0; i < 8; i++) {
             dir[i].setBackground(null);
         }
@@ -188,15 +182,15 @@ public class UI extends JFrame {
 
         for (int row = 0; row < square.length; row++) {
             for (int col = 0; col < square[row].length; col++) {
-                String title;
+                String label;
                 if (temp[row][col] > 0) {
-                    title = "+" + temp[row][col];
+                    label = "+" + temp[row][col];
                 } else if (temp[row][col] == 0) {
-                    title = "0";
+                    label = "0";
                 } else {
-                    title = "" + temp[row][col];
+                    label = "" + temp[row][col];
                 }
-                square[row][col].setText(title);
+                square[row][col].setText(label);
             }
         }
     }
