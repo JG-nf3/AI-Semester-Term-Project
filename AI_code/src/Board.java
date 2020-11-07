@@ -314,11 +314,24 @@ public class Board {
         return spaceToMove;
     }
 
+    /**
+     *
+     * @param dir - the direction we want to move in
+     *            0 -> up vertically
+     *            1 -> down vertically
+     *            2 -> left horizontally
+     *            3 -> right horizontally
+     *            4 -> up left diagonally
+     *            5 -> up right diagonally
+     *            6 -> down left diagonally
+     *            7 -> down right diagonally
+     * @return the new board
+     */
     public Board newBoard(byte row, byte col, byte dir) {
         // create new 2D array with new address
         byte[][] tempStonePosition = new byte[4][4];
-        for (byte rowI = 0; rowI < tempStonePosition.length; rowI++) {
-            for (byte colI = 0; colI < tempStonePosition[rowI].length; colI++) {
+        for (int rowI = 0; rowI < tempStonePosition.length; rowI++) {
+            for (int colI = 0; colI < tempStonePosition[rowI].length; colI++) {
                 tempStonePosition[rowI][colI] = stonePosition[rowI][colI];
             }
         }
@@ -328,7 +341,7 @@ public class Board {
         byte movingStones = tempStonePosition[row][col];
         tempStonePosition[row][col] = 0;
 
-        // updates the board
+        // updates the board with the new stone arrangements
         // if player1 turn
         if (player1Turn) {
             // run through each direction
@@ -509,9 +522,9 @@ public class Board {
                     tempStonePosition[row][col] += movingStones - 3;
                 }
             }
-        }
-        // if player2 turn
-        else {
+        } else {
+            // TODO: there has to be a better way to do this
+            // if player2 turn
             // run through each direction
             if (dir == 0) {
                 if (toMove == 1) {
