@@ -1,8 +1,8 @@
 public class Game {
-    private board current;
+    private Board current;
 
     Game(){
-        current = new board();
+        current = new Board();
     }
 
     public boolean isOver(){
@@ -19,10 +19,10 @@ public class Game {
     }
 
     public void nextTurn(byte row, byte col, byte dir){
-        current = new board(current.newBoard(row, col, dir));
+        current = new Board(current.newBoard(row, col, dir));
     }
 
-    public board getBoard(){
+    public Board getBoard(){
         return current;
     }
 

@@ -1,4 +1,4 @@
-public class board {
+public class Board {
     /**
      * player1 squares are positive number to represent number of stones
      * if 0 then the square is blank
@@ -7,7 +7,7 @@ public class board {
     private byte[][] stonePosition;
     private boolean player1Turn;
 
-    board(){
+    Board(){
         stonePosition = new byte[4][4];
         stonePosition[0][0] = 10;
         stonePosition[3][3] = -10;
@@ -15,12 +15,12 @@ public class board {
         player1Turn = true;
     }
 
-    board(board toMake){
+    Board(Board toMake){
         stonePosition = toMake.getstonePosition();
         player1Turn = toMake.getplayer1Turn();
     }
 
-    board(byte[][] stonePosition, boolean player1Turn){
+    Board(byte[][] stonePosition, boolean player1Turn){
         this.stonePosition = stonePosition;
         this.player1Turn = player1Turn;
     }
@@ -374,7 +374,7 @@ public class board {
         return spaceToMove;
     }
 
-    public board newBoard(byte row, byte col, byte dir){
+    public Board newBoard(byte row, byte col, byte dir){
         // create new 2D array with new address
         byte[][] tempStonePosition = new byte[4][4];
         for(byte rowI = 0; rowI < tempStonePosition.length; rowI++){
@@ -767,6 +767,6 @@ public class board {
         }
 
         // returns a new board with opposite turn
-        return new board(tempStonePosition, !player1Turn);
+        return new Board(tempStonePosition, !player1Turn);
     }
 }
