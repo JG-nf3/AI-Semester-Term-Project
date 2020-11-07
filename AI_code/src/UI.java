@@ -2,10 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class UI  extends JFrame {
+public class UI extends JFrame {
     private JFrame frame;
     private JButton square00;
-    private JLabel whoseTurn;
+    private JLabel currentTurn;
     private JButton[][] square;
     private JButton[] dir;
     private JButton move;
@@ -14,9 +14,9 @@ public class UI  extends JFrame {
     private byte selectedDir;
     private Game game;
 
-    public UI(){
+    public UI() {
         setTitle("Conga");
-        setSize(1500,1100);
+        setSize(1500, 1100);
 
         selectedRow = -1;
         selectedCol = -1;
@@ -29,7 +29,7 @@ public class UI  extends JFrame {
         setVisible(true);
     }
 
-    private void initComponent(){
+    private void initComponent() {
         setupSquare();
         setupDirection();
 
@@ -39,19 +39,19 @@ public class UI  extends JFrame {
         add(move);
 
 
-        whoseTurn = new JLabel("Player 1 turn");
-        whoseTurn.setFont(new Font(whoseTurn.getFont().getName(), whoseTurn.getFont().getStyle(), 28));
-        whoseTurn.setBounds(650, 420, 800, 200);
-        add(whoseTurn);
+        currentTurn = new JLabel("Player 1 turn");
+        currentTurn.setFont(new Font(currentTurn.getFont().getName(), currentTurn.getFont().getStyle(), 28));
+        currentTurn.setBounds(650, 420, 800, 200);
+        add(currentTurn);
     }
 
     private void setupSquare() {
         square = new JButton[4][4];
-        for(int row = 0; row < square.length; row++){
-            for(int col = 0; col < square[row].length; col++){
+        for (int row = 0; row < square.length; row++) {
+            for (int col = 0; col < square[row].length; col++) {
                 String title = "0";
                 square[row][col] = new JButton(title);
-                square[row][col].setBounds(120 + col*100, 100 + row*100, 85, 85);
+                square[row][col].setBounds(120 + col * 100, 100 + row * 100, 85, 85);
                 square[row][col].setFont(new Font(square[row][col].getFont().getName(), square[row][col].getFont().getStyle(), 28));
                 add(square[row][col]);
             }
@@ -88,29 +88,29 @@ public class UI  extends JFrame {
         dir[7] = new JButton("Down-Right");
         dir[7].setBounds(1100, 360, 200, 40);
 
-        for (byte i = 0; i < dir.length; i++) {
+        for (int i = 0; i < dir.length; i++) {
             dir[i].setFont(new Font(dir[i].getFont().getName(), dir[i].getFont().getStyle(), 28));
             add(dir[i]);
         }
     }
 
-    private void initEvent(){
+    private void initEvent() {
 
         this.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e){
+            public void windowClosing(WindowEvent e) {
                 System.exit(1);
             }
         });
 
-        for (byte row = 0; row < square.length; row++) {
-            for (byte col = 0; col < square[row].length; col++) {
-                byte finalRow = row;
-                byte finalCol = col;
+        for (int row = 0; row < square.length; row++) {
+            for (int col = 0; col < square[row].length; col++) {
+                int finalRow = row;
+                int finalCol = col;
                 square[row][col].addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         setButtonSquareBlank();
-                        selectedRow = finalRow;
-                        selectedCol = finalCol;
+                        selectedRow = (byte) finalRow;
+                        selectedCol = (byte) finalCol;
                         square[finalRow][finalCol].setBackground(Color.RED);
                         square[finalRow][finalCol].setOpaque(true);
                     }
@@ -118,24 +118,24 @@ public class UI  extends JFrame {
             }
         }
 
-        for (byte i = 0; i < dir.length; i++) {
-            byte finalI = i;
+        for (int i = 0; i < dir.length; i++) {
+            int finalI = i;
             dir[i].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setButtonDirBlank();
-                    selectedDir = finalI;
+                    selectedDir = (byte) finalI;
                     dir[finalI].setBackground(Color.RED);
                     dir[finalI].setOpaque(true);
                 }
             });
         }
-        
+
         move.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // checks if a square and move is selected
-                if(selectedDir != -1 && selectedRow != -1){
-                    // check if leagle move
-                    if(game.isLegal(selectedRow, selectedCol, selectedDir)){
+                if (selectedDir != -1 && selectedRow != -1) {
+                    // check if legal move
+                    if (game.isLegal(selectedRow, selectedCol, selectedDir)) {
                         // next turn in game
                         game.nextTurn(selectedRow, selectedCol, selectedDir);
                         update();
@@ -148,21 +148,20 @@ public class UI  extends JFrame {
                         selectedDir = -1;
 
                         //checks if game is done
-                        if(game.isOver()){
-                            if(game.getBoard().getplayer1Turn()){
-                                whoseTurn.setText("Player 2 WINS");
-                            }
-                            else{
-                                whoseTurn.setText("Player 1 WINS");
+                        if (game.isOver()) {
+                            if (game.getBoard().getPlayer1Turn()) {
+                                currentTurn.setText("Player 2 WINS");
+                            } else {
+                                currentTurn.setText("Player 1 WINS");
                             }
                         }
+
                         // if game not done then update whose turn
-                        else{
-                            if(whoseTurn.getText().equals("Player 1 turn")){
-                                whoseTurn.setText("Player 2 turn");
-                            }
-                            else{
-                                whoseTurn.setText("Player 1 turn");
+                        else {
+                            if (currentTurn.getText().equals("Player 1 turn")) {
+                                currentTurn.setText("Player 2 turn");
+                            } else {
+                                currentTurn.setText("Player 1 turn");
                             }
                         }
                     }
@@ -171,34 +170,32 @@ public class UI  extends JFrame {
         });
     }
 
-    private void setButtonSquareBlank(){
-        for(int row = 0; row < square.length; row++){
-            for(int col = 0; col < square[row].length; col++){
+    private void setButtonSquareBlank() {
+        for (int row = 0; row < square.length; row++) {
+            for (int col = 0; col < square[row].length; col++) {
                 square[row][col].setBackground(null);
                 //square[row][col].setOpaque(true);
             }
         }
     }
 
-    private void setButtonDirBlank(){
-        for(int i = 0; i < 8; i++){
+    private void setButtonDirBlank() {
+        for (int i = 0; i < 8; i++) {
             dir[i].setBackground(null);
         }
     }
 
-    private void update(){
-        byte[][] temp = game.getBoard().getstonePosition();
+    private void update() {
+        byte[][] temp = game.getBoard().getStonePosition();
 
-        for(int row = 0; row < square.length; row++){
-            for(int col = 0; col < square[row].length; col++){
+        for (int row = 0; row < square.length; row++) {
+            for (int col = 0; col < square[row].length; col++) {
                 String title;
-                if(temp[row][col] > 0){
+                if (temp[row][col] > 0) {
                     title = "+" + temp[row][col];
-                }
-                else if(temp[row][col] == 0){
+                } else if (temp[row][col] == 0) {
                     title = "0";
-                }
-                else{
+                } else {
                     title = "" + temp[row][col];
                 }
                 square[row][col].setText(title);
