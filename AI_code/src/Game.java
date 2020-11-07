@@ -9,7 +9,7 @@ public class Game {
         for (byte row = 0; row < 4; row++) {
             for (byte col = 0; col < 4; col++) {
                 for (byte dir = 0; dir < 8; dir++) {
-                    if (current.validMove(row, col, dir) > 0) {
+                    if (isLegal(row, col, dir)) {
                         return false;
                     }
                 }
