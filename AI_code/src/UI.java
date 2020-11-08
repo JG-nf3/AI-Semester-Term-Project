@@ -10,6 +10,11 @@ public class UI extends JFrame {
     private byte selectedRow;
     private byte selectedCol;
     private byte selectedDir;
+
+    public Game getGame() {
+        return game;
+    }
+
     private Game game;
 
     public UI() {
@@ -131,32 +136,8 @@ public class UI extends JFrame {
                 if (game.isLegal(selectedRow, selectedCol, selectedDir)) {
                     // next turn in game
                     game.nextTurn(selectedRow, selectedCol, selectedDir);
-                    update();
-
-                    // set buttons blank and clear selected info
-                    clearSquareBGs();
-                    clearDirBGs();
-                    selectedRow = -1;
-                    selectedCol = -1;
-                    selectedDir = -1;
-
-                    //checks if game is done
-                    if (game.isOver()) {
-                        if (game.getBoard().getPlayer1Turn()) {
-                            currentTurn.setText("Player 2 WINS");
-                        } else {
-                            currentTurn.setText("Player 1 WINS");
-                        }
-                    }
-
-                    // if game isn't done then update whose turn it is
-                    else {
-                        if (game.getBoard().getPlayer1Turn()) {
-                            currentTurn.setText("Player 1 turn");
-                        } else {
-                            currentTurn.setText("Player 2 turn");
-                        }
-                    }
+                    // update our UI to match the new turn
+                    updateUIForNewTurn();
                 }
             }
         });
@@ -191,6 +172,38 @@ public class UI extends JFrame {
                     label = "" + temp[row][col];
                 }
                 square[row][col].setText(label);
+            }
+        }
+    }
+
+    public void updateUIForNewTurn() {
+        // updates the square labels
+        update();
+
+        // clears the backgrounds and selected info
+        clearSquareBGs();
+        clearDirBGs();
+        selectedRow = -1;
+        selectedCol = -1;
+        selectedDir = -1;
+
+        // checks if game is done
+        // TODO: move this check to when we do the next turn instead of being in the UI
+        if (game.isOver()) {
+            if (!game.getBoard().getPlayer1Turn()) {
+                // if it isn't player 1's turn, but the game is over, then player 1 must have won
+                currentTurn.setText("Player 1 WINS");
+            } else {
+                currentTurn.setText("Player 2 WINS");
+            }
+        }
+
+        // if game isn't over then update whose turn it is
+        else {
+            if (game.getBoard().getPlayer1Turn()) {
+                currentTurn.setText("Player 1 turn");
+            } else {
+                currentTurn.setText("Player 2 turn");
             }
         }
     }
