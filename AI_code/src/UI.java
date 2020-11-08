@@ -151,10 +151,10 @@ public class UI extends JFrame {
 
                     // if game isn't done then update whose turn it is
                     else {
-                        if (currentTurn.getText().equals("Player 1 turn")) {
-                            currentTurn.setText("Player 2 turn");
-                        } else {
+                        if (game.getBoard().getPlayer1Turn()) {
                             currentTurn.setText("Player 1 turn");
+                        } else {
+                            currentTurn.setText("Player 2 turn");
                         }
                     }
                 }
