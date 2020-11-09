@@ -33,7 +33,13 @@ public class Game {
         return current.validMove(row, col, dir) != 0;
     }
 
-    public List getLegalMoves() {
+    /**
+     *
+     * @return a List of byte arrays that contain legal moves
+     *         these byte arrays should be of length 3 and contain
+     *         the row, col, and dir, in that order
+     */
+    public List<byte[]> getLegalMoves() {
         List<byte[]> moves= new ArrayList<byte[]>();
 
         for (byte row = 0; row < 4; row++) {
