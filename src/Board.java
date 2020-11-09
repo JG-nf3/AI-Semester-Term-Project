@@ -219,371 +219,176 @@ public class Board {
 
         // setup to move stones
         byte toMove = validMove(row, col, dir);
+        // The number of stones we're working with
         byte movingStones = tempStonePosition[row][col];
+        // set the current position to 0 now
         tempStonePosition[row][col] = 0;
 
+        int multiplier = player1Turn ? 1 : -1;
+
         // updates the board with the new stone arrangements
-        // if player1 turn
-        if (player1Turn) {
-            // run through each direction
-            if (dir == 0) {
-                if (toMove == 1) {
-                    row--;
-                    tempStonePosition[row][col] += movingStones;
-                } else if (toMove == 2) {
-                    row--;
-                    tempStonePosition[row][col] += 1;
-                    row--;
-                    tempStonePosition[row][col] += movingStones - 1;
-                } else if (toMove == 3) {
-                    row--;
-                    tempStonePosition[row][col] += 1;
-                    row--;
-                    tempStonePosition[row][col] += 2;
-                    row--;
-                    tempStonePosition[row][col] += movingStones - 3;
-                }
-            } else if (dir == 1) {
-                if (toMove == 1) {
-                    row++;
-                    tempStonePosition[row][col] += movingStones;
-                }
-                if (toMove == 2) {
-                    row++;
-                    tempStonePosition[row][col] += 1;
-                    row++;
-                    tempStonePosition[row][col] += movingStones - 1;
-                }
-                if (toMove == 3) {
-                    row++;
-                    tempStonePosition[row][col] += 1;
-                    row++;
-                    tempStonePosition[row][col] += 2;
-                    row++;
-                    tempStonePosition[row][col] += movingStones - 3;
-                }
-            } else if (dir == 2) {
-                if (toMove == 1) {
-                    col--;
-                    tempStonePosition[row][col] += movingStones;
-                }
-                if (toMove == 2) {
-                    col--;
-                    tempStonePosition[row][col] += 1;
-                    col--;
-                    tempStonePosition[row][col] += movingStones - 1;
-                }
-                if (toMove == 3) {
-                    col--;
-                    tempStonePosition[row][col] += 1;
-                    col--;
-                    tempStonePosition[row][col] += 2;
-                    col--;
-                    tempStonePosition[row][col] += movingStones - 3;
-                }
-            } else if (dir == 3) {
-                if (toMove == 1) {
-                    col++;
-                    tempStonePosition[row][col] += movingStones;
-                }
-                if (toMove == 2) {
-                    col++;
-                    tempStonePosition[row][col] += 1;
-                    col++;
-                    tempStonePosition[row][col] += movingStones - 1;
-                }
-                if (toMove == 3) {
-                    col++;
-                    tempStonePosition[row][col] += 1;
-                    col++;
-                    tempStonePosition[row][col] += 2;
-                    col++;
-                    tempStonePosition[row][col] += movingStones - 3;
-                }
-            } else if (dir == 4) {
-                if (toMove == 1) {
-                    row--;
-                    col--;
-                    tempStonePosition[row][col] += movingStones;
-                }
-                if (toMove == 2) {
-                    row--;
-                    col--;
-                    tempStonePosition[row][col] += 1;
-                    row--;
-                    col--;
-                    tempStonePosition[row][col] += movingStones - 1;
-                }
-                if (toMove == 3) {
-                    row--;
-                    col--;
-                    tempStonePosition[row][col] += 1;
-                    row--;
-                    col--;
-                    tempStonePosition[row][col] += 2;
-                    row--;
-                    col--;
-                    tempStonePosition[row][col] += movingStones - 3;
-                }
-            } else if (dir == 5) {
-                if (toMove == 1) {
-                    row--;
-                    col++;
-                    tempStonePosition[row][col] += movingStones;
-                }
-                if (toMove == 2) {
-                    row--;
-                    col++;
-                    tempStonePosition[row][col] += 1;
-                    row--;
-                    col++;
-                    tempStonePosition[row][col] += movingStones - 1;
-                }
-                if (toMove == 3) {
-                    row--;
-                    col++;
-                    tempStonePosition[row][col] += 1;
-                    row--;
-                    col++;
-                    tempStonePosition[row][col] += 2;
-                    row--;
-                    col++;
-                    tempStonePosition[row][col] += movingStones - 3;
-                }
-            } else if (dir == 6) {
-                if (toMove == 1) {
-                    row++;
-                    col--;
-                    tempStonePosition[row][col] += movingStones;
-                }
-                if (toMove == 2) {
-                    row++;
-                    col--;
-                    tempStonePosition[row][col] += 1;
-                    row++;
-                    col--;
-                    tempStonePosition[row][col] += movingStones - 1;
-                }
-                if (toMove == 3) {
-                    row++;
-                    col--;
-                    tempStonePosition[row][col] += 1;
-                    row++;
-                    col--;
-                    tempStonePosition[row][col] += 2;
-                    row++;
-                    col--;
-                    tempStonePosition[row][col] += movingStones - 3;
-                }
-            } else if (dir == 7) {
-                if (toMove == 1) {
-                    row++;
-                    col++;
-                    tempStonePosition[row][col] += movingStones;
-                }
-                if (toMove == 2) {
-                    row++;
-                    col++;
-                    tempStonePosition[row][col] += 1;
-                    row++;
-                    col++;
-                    tempStonePosition[row][col] += movingStones - 1;
-                }
-                if (toMove == 3) {
-                    row++;
-                    col++;
-                    tempStonePosition[row][col] += 1;
-                    row++;
-                    col++;
-                    tempStonePosition[row][col] += 2;
-                    row++;
-                    col++;
-                    tempStonePosition[row][col] += movingStones - 3;
-                }
+        // run through each direction
+        if (dir == 0) {
+            if (toMove == 1) {
+                row--;
+                tempStonePosition[row][col] += movingStones;
+            } else if (toMove == 2) {
+                row--;
+                tempStonePosition[row][col] += 1 * multiplier;
+                row--;
+                tempStonePosition[row][col] += movingStones - (1 * multiplier);
+            } else if (toMove == 3) {
+                row--;
+                tempStonePosition[row][col] += 1 * multiplier;
+                row--;
+                tempStonePosition[row][col] += 2 * multiplier;
+                row--;
+                tempStonePosition[row][col] += movingStones - (3 * multiplier);
             }
-        } else {
-            // TODO: there has to be a better way to do this
-            // if player2 turn
-            // run through each direction
-            if (dir == 0) {
-                if (toMove == 1) {
-                    row--;
-                    tempStonePosition[row][col] += movingStones;
-                }
-                if (toMove == 2) {
-                    row--;
-                    tempStonePosition[row][col] += -1;
-                    row--;
-                    tempStonePosition[row][col] += movingStones + 1;
-                }
-                if (toMove == 3) {
-                    row--;
-                    tempStonePosition[row][col] += -1;
-                    row--;
-                    tempStonePosition[row][col] += -2;
-                    row--;
-                    tempStonePosition[row][col] += movingStones + 3;
-                }
-            } else if (dir == 1) {
-                if (toMove == 1) {
-                    row++;
-                    tempStonePosition[row][col] += movingStones;
-                }
-                if (toMove == 2) {
-                    row++;
-                    tempStonePosition[row][col] += -1;
-                    row++;
-                    tempStonePosition[row][col] += movingStones + 1;
-                }
-                if (toMove == 3) {
-                    row--;
-                    tempStonePosition[row][col] += -1;
-                    row--;
-                    tempStonePosition[row][col] += -2;
-                    row--;
-                    tempStonePosition[row][col] += movingStones + 3;
-                }
-            } else if (dir == 2) {
-                if (toMove == 1) {
-                    col--;
-                    tempStonePosition[row][col] += movingStones;
-                }
-                if (toMove == 2) {
-                    col--;
-                    tempStonePosition[row][col] += -1;
-                    col--;
-                    tempStonePosition[row][col] += movingStones + 1;
-                }
-                if (toMove == 3) {
-                    col--;
-                    tempStonePosition[row][col] += -1;
-                    col--;
-                    tempStonePosition[row][col] += -2;
-                    col--;
-                    tempStonePosition[row][col] += movingStones + 3;
-                }
-            } else if (dir == 3) {
-                if (toMove == 1) {
-                    col++;
-                    tempStonePosition[row][col] += movingStones;
-                }
-                if (toMove == 2) {
-                    col++;
-                    tempStonePosition[row][col] += -1;
-                    col++;
-                    tempStonePosition[row][col] += movingStones + 1;
-                }
-                if (toMove == 3) {
-                    col++;
-                    tempStonePosition[row][col] += -1;
-                    col++;
-                    tempStonePosition[row][col] += -2;
-                    col++;
-                    tempStonePosition[row][col] += movingStones + 3;
-                }
-            } else if (dir == 4) {
-                if (toMove == 1) {
-                    row--;
-                    col--;
-                    tempStonePosition[row][col] += movingStones;
-                }
-                if (toMove == 2) {
-                    row--;
-                    col--;
-                    tempStonePosition[row][col] += -1;
-                    row--;
-                    col--;
-                    tempStonePosition[row][col] += movingStones + 1;
-                }
-                if (toMove == 3) {
-                    row--;
-                    col--;
-                    tempStonePosition[row][col] += -1;
-                    row--;
-                    col--;
-                    tempStonePosition[row][col] += -2;
-                    row--;
-                    col--;
-                    tempStonePosition[row][col] += movingStones + 3;
-                }
-            } else if (dir == 5) {
-                if (toMove == 1) {
-                    row--;
-                    col++;
-                    tempStonePosition[row][col] += movingStones;
-                }
-                if (toMove == 2) {
-                    row--;
-                    col++;
-                    tempStonePosition[row][col] += -1;
-                    row--;
-                    col++;
-                    tempStonePosition[row][col] += movingStones + 1;
-                }
-                if (toMove == 3) {
-                    row--;
-                    col++;
-                    tempStonePosition[row][col] += -1;
-                    row--;
-                    col++;
-                    tempStonePosition[row][col] += -2;
-                    row--;
-                    col++;
-                    tempStonePosition[row][col] += movingStones + 3;
-                }
-            } else if (dir == 6) {
-                if (toMove == 1) {
-                    row++;
-                    col--;
-                    tempStonePosition[row][col] += movingStones;
-                }
-                if (toMove == 2) {
-                    row++;
-                    col--;
-                    tempStonePosition[row][col] += -1;
-                    row++;
-                    col--;
-                    tempStonePosition[row][col] += movingStones + 1;
-                }
-                if (toMove == 3) {
-                    row++;
-                    col--;
-                    tempStonePosition[row][col] += -1;
-                    row++;
-                    col--;
-                    tempStonePosition[row][col] += -2;
-                    row++;
-                    col--;
-                    tempStonePosition[row][col] += movingStones + 3;
-                }
-            } else if (dir == 7) {
-                if (toMove == 1) {
-                    row++;
-                    col++;
-                    tempStonePosition[row][col] += movingStones;
-                }
-                if (toMove == 2) {
-                    row++;
-                    col++;
-                    tempStonePosition[row][col] += -1;
-                    row++;
-                    col++;
-                    tempStonePosition[row][col] += movingStones + 1;
-                }
-                if (toMove == 3) {
-                    row++;
-                    col++;
-                    tempStonePosition[row][col] += -1;
-                    row++;
-                    col++;
-                    tempStonePosition[row][col] += -2;
-                    row++;
-                    col++;
-                    tempStonePosition[row][col] += movingStones + 3;
-                }
+        } else if (dir == 1) {
+            if (toMove == 1) {
+                row++;
+                tempStonePosition[row][col] += movingStones;
+            } else if (toMove == 2) {
+                row++;
+                tempStonePosition[row][col] += 1 * multiplier;
+                row++;
+                tempStonePosition[row][col] += movingStones - (1 * multiplier);
+            } else if (toMove == 3) {
+                row++;
+                tempStonePosition[row][col] += 1 * multiplier;
+                row++;
+                tempStonePosition[row][col] += 2 * multiplier;
+                row++;
+                tempStonePosition[row][col] += movingStones - (3 * multiplier);
+            }
+        } else if (dir == 2) {
+            if (toMove == 1) {
+                col--;
+                tempStonePosition[row][col] += movingStones;
+            } else if (toMove == 2) {
+                col--;
+                tempStonePosition[row][col] += 1 * multiplier;
+                col--;
+                tempStonePosition[row][col] += movingStones - (1 * multiplier);
+            } else if (toMove == 3) {
+                col--;
+                tempStonePosition[row][col] += 1 * multiplier;
+                col--;
+                tempStonePosition[row][col] += 2 * multiplier;
+                col--;
+                tempStonePosition[row][col] += movingStones - (3 * multiplier);
+            }
+        } else if (dir == 3) {
+            if (toMove == 1) {
+                col++;
+                tempStonePosition[row][col] += movingStones;
+            } else if (toMove == 2) {
+                col++;
+                tempStonePosition[row][col] += 1 * multiplier;
+                col++;
+                tempStonePosition[row][col] += movingStones - (1 * multiplier);
+            } else if (toMove == 3) {
+                col++;
+                tempStonePosition[row][col] += 1 * multiplier;
+                col++;
+                tempStonePosition[row][col] += 2 * multiplier;
+                col++;
+                tempStonePosition[row][col] += movingStones - (3 * multiplier);
+            }
+        } else if (dir == 4) {
+            if (toMove == 1) {
+                row--;
+                col--;
+                tempStonePosition[row][col] += movingStones;
+            } else if (toMove == 2) {
+                row--;
+                col--;
+                tempStonePosition[row][col] += 1 * multiplier;
+                row--;
+                col--;
+                tempStonePosition[row][col] += movingStones - (1 * multiplier);
+            } else if (toMove == 3) {
+                row--;
+                col--;
+                tempStonePosition[row][col] += 1 * multiplier;
+                row--;
+                col--;
+                tempStonePosition[row][col] += 2 * multiplier;
+                row--;
+                col--;
+                tempStonePosition[row][col] += movingStones - (3 * multiplier);
+            }
+        } else if (dir == 5) {
+            if (toMove == 1) {
+                row--;
+                col++;
+                tempStonePosition[row][col] += movingStones;
+            } else if (toMove == 2) {
+                row--;
+                col++;
+                tempStonePosition[row][col] += 1 * multiplier;
+                row--;
+                col++;
+                tempStonePosition[row][col] += movingStones - (1 * multiplier);
+            } else if (toMove == 3) {
+                row--;
+                col++;
+                tempStonePosition[row][col] += 1 * multiplier;
+                row--;
+                col++;
+                tempStonePosition[row][col] += 2 * multiplier;
+                row--;
+                col++;
+                tempStonePosition[row][col] += movingStones - (3 * multiplier);
+            }
+        } else if (dir == 6) {
+            if (toMove == 1) {
+                row++;
+                col--;
+                tempStonePosition[row][col] += movingStones;
+            } else if (toMove == 2) {
+                row++;
+                col--;
+                tempStonePosition[row][col] += 1 * multiplier;
+                row++;
+                col--;
+                tempStonePosition[row][col] += movingStones - (1 * multiplier);
+            } else if (toMove == 3) {
+                row++;
+                col--;
+                tempStonePosition[row][col] += 1 * multiplier;
+                row++;
+                col--;
+                tempStonePosition[row][col] += 2 * multiplier;
+                row++;
+                col--;
+                tempStonePosition[row][col] += movingStones - (3 * multiplier);
+            }
+        } else if (dir == 7) {
+            if (toMove == 1) {
+                row++;
+                col++;
+                tempStonePosition[row][col] += movingStones;
+            } else if (toMove == 2) {
+                row++;
+                col++;
+                tempStonePosition[row][col] += 1 * multiplier;
+                row++;
+                col++;
+                tempStonePosition[row][col] += movingStones - (1 * multiplier);
+            } else if (toMove == 3) {
+                row++;
+                col++;
+                tempStonePosition[row][col] += 1 * multiplier;
+                row++;
+                col++;
+                tempStonePosition[row][col] += 2 * multiplier;
+                row++;
+                col++;
+                tempStonePosition[row][col] += movingStones - (3 * multiplier);
             }
         }
-
         // returns a new board with opposite turn
         return new Board(tempStonePosition, !player1Turn);
     }
