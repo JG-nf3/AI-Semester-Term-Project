@@ -5,6 +5,9 @@ public class Board {
      * If a square has a Negative number of stones, that means Player 2 has that number in that square
      **/
     private final byte[][] stonePosition;
+    /**
+     * true if it is player 1's turn, false otherwise
+     */
     private final boolean player1Turn;
 
     public Board() {
@@ -224,6 +227,8 @@ public class Board {
         // set the current position to 0 now
         tempStonePosition[row][col] = 0;
 
+        // Create a multiplier based on whos turn it is
+        // so we move around the correct numbers of stones
         int multiplier = player1Turn ? 1 : -1;
 
         // updates the board with the new stone arrangements
@@ -234,12 +239,12 @@ public class Board {
                 tempStonePosition[row][col] += movingStones;
             } else if (toMove == 2) {
                 row--;
-                tempStonePosition[row][col] += 1 * multiplier;
+                tempStonePosition[row][col] += multiplier;
                 row--;
-                tempStonePosition[row][col] += movingStones - (1 * multiplier);
+                tempStonePosition[row][col] += movingStones - (multiplier);
             } else if (toMove == 3) {
                 row--;
-                tempStonePosition[row][col] += 1 * multiplier;
+                tempStonePosition[row][col] += multiplier;
                 row--;
                 tempStonePosition[row][col] += 2 * multiplier;
                 row--;
@@ -251,12 +256,12 @@ public class Board {
                 tempStonePosition[row][col] += movingStones;
             } else if (toMove == 2) {
                 row++;
-                tempStonePosition[row][col] += 1 * multiplier;
+                tempStonePosition[row][col] += multiplier;
                 row++;
-                tempStonePosition[row][col] += movingStones - (1 * multiplier);
+                tempStonePosition[row][col] += movingStones - (multiplier);
             } else if (toMove == 3) {
                 row++;
-                tempStonePosition[row][col] += 1 * multiplier;
+                tempStonePosition[row][col] += multiplier;
                 row++;
                 tempStonePosition[row][col] += 2 * multiplier;
                 row++;
@@ -268,12 +273,12 @@ public class Board {
                 tempStonePosition[row][col] += movingStones;
             } else if (toMove == 2) {
                 col--;
-                tempStonePosition[row][col] += 1 * multiplier;
+                tempStonePosition[row][col] += multiplier;
                 col--;
-                tempStonePosition[row][col] += movingStones - (1 * multiplier);
+                tempStonePosition[row][col] += movingStones - (multiplier);
             } else if (toMove == 3) {
                 col--;
-                tempStonePosition[row][col] += 1 * multiplier;
+                tempStonePosition[row][col] += multiplier;
                 col--;
                 tempStonePosition[row][col] += 2 * multiplier;
                 col--;
@@ -285,12 +290,12 @@ public class Board {
                 tempStonePosition[row][col] += movingStones;
             } else if (toMove == 2) {
                 col++;
-                tempStonePosition[row][col] += 1 * multiplier;
+                tempStonePosition[row][col] += multiplier;
                 col++;
-                tempStonePosition[row][col] += movingStones - (1 * multiplier);
+                tempStonePosition[row][col] += movingStones - (multiplier);
             } else if (toMove == 3) {
                 col++;
-                tempStonePosition[row][col] += 1 * multiplier;
+                tempStonePosition[row][col] += multiplier;
                 col++;
                 tempStonePosition[row][col] += 2 * multiplier;
                 col++;
@@ -304,14 +309,14 @@ public class Board {
             } else if (toMove == 2) {
                 row--;
                 col--;
-                tempStonePosition[row][col] += 1 * multiplier;
+                tempStonePosition[row][col] += multiplier;
                 row--;
                 col--;
-                tempStonePosition[row][col] += movingStones - (1 * multiplier);
+                tempStonePosition[row][col] += movingStones - (multiplier);
             } else if (toMove == 3) {
                 row--;
                 col--;
-                tempStonePosition[row][col] += 1 * multiplier;
+                tempStonePosition[row][col] += multiplier;
                 row--;
                 col--;
                 tempStonePosition[row][col] += 2 * multiplier;
@@ -327,14 +332,14 @@ public class Board {
             } else if (toMove == 2) {
                 row--;
                 col++;
-                tempStonePosition[row][col] += 1 * multiplier;
+                tempStonePosition[row][col] += multiplier;
                 row--;
                 col++;
-                tempStonePosition[row][col] += movingStones - (1 * multiplier);
+                tempStonePosition[row][col] += movingStones - (multiplier);
             } else if (toMove == 3) {
                 row--;
                 col++;
-                tempStonePosition[row][col] += 1 * multiplier;
+                tempStonePosition[row][col] += multiplier;
                 row--;
                 col++;
                 tempStonePosition[row][col] += 2 * multiplier;
@@ -350,14 +355,14 @@ public class Board {
             } else if (toMove == 2) {
                 row++;
                 col--;
-                tempStonePosition[row][col] += 1 * multiplier;
+                tempStonePosition[row][col] += multiplier;
                 row++;
                 col--;
-                tempStonePosition[row][col] += movingStones - (1 * multiplier);
+                tempStonePosition[row][col] += movingStones - (multiplier);
             } else if (toMove == 3) {
                 row++;
                 col--;
-                tempStonePosition[row][col] += 1 * multiplier;
+                tempStonePosition[row][col] += multiplier;
                 row++;
                 col--;
                 tempStonePosition[row][col] += 2 * multiplier;
@@ -373,14 +378,14 @@ public class Board {
             } else if (toMove == 2) {
                 row++;
                 col++;
-                tempStonePosition[row][col] += 1 * multiplier;
+                tempStonePosition[row][col] += multiplier;
                 row++;
                 col++;
-                tempStonePosition[row][col] += movingStones - (1 * multiplier);
+                tempStonePosition[row][col] += movingStones - (multiplier);
             } else if (toMove == 3) {
                 row++;
                 col++;
-                tempStonePosition[row][col] += 1 * multiplier;
+                tempStonePosition[row][col] += multiplier;
                 row++;
                 col++;
                 tempStonePosition[row][col] += 2 * multiplier;
@@ -393,12 +398,17 @@ public class Board {
         return new Board(tempStonePosition, !player1Turn);
     }
 
+    /**
+     * @param row - the row to check
+     * @param col - the col to check
+     * @return true if the opponent has stones in the specified square
+     * false otherwise
+     */
     private boolean doesOpponentPopulate(byte row, byte col) {
         if (player1Turn) {
-            if (stonePosition[row][col] < 0) return true;
+            return stonePosition[row][col] < 0;
         } else {
-            if (stonePosition[row][col] > 0) return true;
+            return stonePosition[row][col] > 0;
         }
-        return false;
     }
 }
