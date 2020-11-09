@@ -13,8 +13,6 @@ public class RandomAgent {
 
     public void move() {
         Random rng = new Random();
-        // If its not our turn or the game is over we don't do anything else
-        if (game.getBoard().getPlayer1Turn() || game.isOver()) return;
 
         System.out.println("RA turn");
         // Variables to store our randomly generated values
@@ -33,8 +31,6 @@ public class RandomAgent {
 
         // Move the game to the next turn
         game.nextTurn(randomRow, randomCol, randomDir);
-        // and update the UI appropriately
-        userInterface.updateUIForNewTurn();
 
     }
 }

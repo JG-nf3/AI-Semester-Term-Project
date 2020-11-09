@@ -4,7 +4,13 @@ public class Main {
         UI conga = new UI();
         RandomAgent randomAgent = new RandomAgent(conga);
         while(true) {
-            randomAgent.move();
+            if (conga.getGame().isOver()) return;
+            if (conga.getGame().getBoard().getPlayer1Turn()) {
+                // Do nothing for now, eventually minimax agent will play here
+            } else {
+                randomAgent.move();
+                conga.updateUIForNewTurn();
+            }
         }
     }
 }
