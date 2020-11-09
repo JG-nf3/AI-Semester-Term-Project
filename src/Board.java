@@ -80,8 +80,6 @@ public class Board {
             }
         }
 
-        int multiplier = player1Turn ? 1 : -1;
-
         while (squaresBeforeRunOut > 0) {
             // check for moves
             if (dir == 0) {
