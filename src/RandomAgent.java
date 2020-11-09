@@ -19,7 +19,7 @@ public class RandomAgent {
         System.out.println("RA turn");
         // Variables to store our randomly generated values
         byte randomRow, randomCol, randomDir;
-
+        // TODO: rewrite this using better stuff see channel at 7:31pm 11/8
         do {
             // Generate 3 random bytes to use for our move
             randomRow = (byte) rng.nextInt(4);
