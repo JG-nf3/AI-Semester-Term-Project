@@ -13,8 +13,8 @@ public class RandomAgent {
 
     public void move() {
         Random rng = new Random();
-        // If its not our turn we don't do anything else
-        if (game.getBoard().getPlayer1Turn()) return;
+        // If its not our turn or the game is over we don't do anything else
+        if (game.getBoard().getPlayer1Turn() || game.isOver()) return;
 
         System.out.println("RA turn");
         // Variables to store our randomly generated values

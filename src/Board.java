@@ -4,10 +4,10 @@ public class Board {
      * if a square has 0 then neither player has a stone there
      * If a square has a Negative number of stones, that means Player 2 has that number in that square
      **/
-    private byte[][] stonePosition;
-    private boolean player1Turn;
+    private final byte[][] stonePosition;
+    private final boolean player1Turn;
 
-    Board() {
+    public Board() {
         // Initial board setup, a 4x4 2d array to store all the squares
         stonePosition = new byte[4][4];
         // Player 1 starts with 10 in the top left
@@ -19,12 +19,12 @@ public class Board {
         player1Turn = true;
     }
 
-    Board(Board toMake) {
+    public Board(Board toMake) {
         stonePosition = toMake.getStonePosition();
         player1Turn = toMake.getPlayer1Turn();
     }
 
-    Board(byte[][] stonePosition, boolean player1Turn) {
+    public Board(byte[][] stonePosition, boolean player1Turn) {
         this.stonePosition = stonePosition;
         this.player1Turn = player1Turn;
     }
@@ -47,266 +47,150 @@ public class Board {
      *            5 -> up right diagonally
      *            6 -> down left diagonally
      *            7 -> down right diagonally
-     * @return
-     * 0 -> invalid move
+     * @return 0 -> invalid move
      * 1 -> valid move and can move 1 square
      * 2 -> valid move and can move 2 squares
      * 3 -> valid move and can move 3 squares
      **/
     public byte validMove(byte row, byte col, byte dir) {
         byte spaceToMove = 0;
+        byte squaresBeforeRunOut;
 
-        // for player1 turn
         if (player1Turn) {
-            // check if there is no stones in the square
-            if (stonePosition[row][col] > 0) {
-                // section to see how many squares before run out
-                byte squaresBeforeRunOut;
-                if (stonePosition[row][col] > 3) {
-                    squaresBeforeRunOut = 3;
-                } else if (stonePosition[row][col] > 1) {
-                    squaresBeforeRunOut = 2;
-                } else {
-                    squaresBeforeRunOut = 1;
-                }
-
-                while (squaresBeforeRunOut > 0) {
-                    // check for moves
-                    if (dir == 0) {
-                        // check if moving out of bounds
-                        if (row == 0) {
-                            return spaceToMove;
-                        }
-                        // check if new square has opponents stones
-                        row--;
-                        if (stonePosition[row][col] < 0) {
-                            return spaceToMove;
-                        } else {
-                            spaceToMove++;
-                            squaresBeforeRunOut--;
-                        }
-                    } else if (dir == 1) {
-                        // check if moving out of bounds
-                        if (row == 3) {
-                            return spaceToMove;
-                        }
-                        // check if new square has opponents stones
-                        row++;
-                        if (stonePosition[row][col] < 0) {
-                            return spaceToMove;
-                        } else {
-                            spaceToMove++;
-                            squaresBeforeRunOut--;
-                        }
-                    } else if (dir == 2) {
-                        // check if moving out of bounds
-                        if (col == 0) {
-                            return spaceToMove;
-                        }
-                        // check if new square has opponents stones
-                        col--;
-                        if (stonePosition[row][col] < 0) {
-                            return spaceToMove;
-                        } else {
-                            spaceToMove++;
-                            squaresBeforeRunOut--;
-                        }
-                    } else if (dir == 3) {
-                        // check if moving out of bounds
-                        if (col == 3) {
-                            return spaceToMove;
-                        }
-                        // check if new square has opponents stones
-                        col++;
-                        if (stonePosition[row][col] < 0) {
-                            return spaceToMove;
-                        } else {
-                            spaceToMove++;
-                            squaresBeforeRunOut--;
-                        }
-                    } else if (dir == 4) {
-                        // check if moving out of bounds
-                        if (row == 0 || col == 0) {
-                            return spaceToMove;
-                        }
-                        // check if new square has opponents stones
-                        row--;
-                        col--;
-                        if (stonePosition[row][col] < 0) {
-                            return spaceToMove;
-                        } else {
-                            spaceToMove++;
-                            squaresBeforeRunOut--;
-                        }
-                    } else if (dir == 5) {
-                        // check if moving out of bounds
-                        if (row == 0 || col == 3) {
-                            return spaceToMove;
-                        }
-                        // check if new square has opponents stones
-                        row--;
-                        col++;
-                        if (stonePosition[row][col] < 0) {
-                            return spaceToMove;
-                        } else {
-                            spaceToMove++;
-                            squaresBeforeRunOut--;
-                        }
-                    } else if (dir == 6) {
-                        // check if moving out of bounds
-                        if (row == 3 || col == 0) {
-                            return spaceToMove;
-                        }
-                        // check if new square has opponents stones
-                        row++;
-                        col--;
-                        if (stonePosition[row][col] < 0) {
-                            return spaceToMove;
-                        } else {
-                            spaceToMove++;
-                            squaresBeforeRunOut--;
-                        }
-                    } else if (dir == 7) {
-                        // check if moving out of bounds
-                        if (row == 3 || col == 3) {
-                            return spaceToMove;
-                        }
-                        // check if new square has opponents stones
-                        row++;
-                        col++;
-                        if (stonePosition[row][col] < 0) {
-                            return spaceToMove;
-                        } else {
-                            spaceToMove++;
-                            squaresBeforeRunOut--;
-                        }
-                    }
-                }
+            if (stonePosition[row][col] <= 0) {
+                return spaceToMove;
+            }
+            if (stonePosition[row][col] > 3) {
+                squaresBeforeRunOut = 3;
+            } else if (stonePosition[row][col] > 1) {
+                squaresBeforeRunOut = 2;
+            } else {
+                squaresBeforeRunOut = 1;
             }
         } else {
-            // Player 2's turn
-            if (stonePosition[row][col] < 0) {
-                // see how many squares before we run out of stones
-                byte squaresBeforeRunOut;
-                if (stonePosition[row][col] < -3) {
-                    squaresBeforeRunOut = 3;
-                } else if (stonePosition[row][col] < -1) {
-                    squaresBeforeRunOut = 2;
-                } else {
-                    squaresBeforeRunOut = 1;
-                }
+            if (stonePosition[row][col] >= 0) {
+                return spaceToMove;
+            }
+            if (stonePosition[row][col] < -3) {
+                squaresBeforeRunOut = 3;
+            } else if (stonePosition[row][col] < -1) {
+                squaresBeforeRunOut = 2;
+            } else {
+                squaresBeforeRunOut = 1;
+            }
+        }
 
-                // check for moves
-                while (squaresBeforeRunOut > 0) {
-                    if (dir == 0) {
-                        // check if moving out of bounds
-                        if (row == 0) {
-                            return spaceToMove;
-                        }
-                        // check if new square has opponents stones
-                        row--;
-                        if (stonePosition[row][col] > 0) {
-                            return spaceToMove;
-                        } else {
-                            spaceToMove++;
-                            squaresBeforeRunOut--;
-                        }
-                    } else if (dir == 1) {
-                        // check if moving out of bounds
-                        if (row == 3) {
-                            return spaceToMove;
-                        }
-                        // check if new square has opponents stones
-                        row++;
-                        if (stonePosition[row][col] > 0) {
-                            return spaceToMove;
-                        } else {
-                            spaceToMove++;
-                            squaresBeforeRunOut--;
-                        }
-                    } else if (dir == 2) {
-                        // check if moving out of bounds
-                        if (col == 0) {
-                            return spaceToMove;
-                        }
-                        // check if new square has opponents stones
-                        col--;
-                        if (stonePosition[row][col] > 0) {
-                            return spaceToMove;
-                        } else {
-                            spaceToMove++;
-                            squaresBeforeRunOut--;
-                        }
-                    } else if (dir == 3) {
-                        // check if moving out of bounds
-                        if (col == 3) {
-                            return spaceToMove;
-                        }
-                        // check if new square has opponents stones
-                        col++;
-                        if (stonePosition[row][col] > 0) {
-                            return spaceToMove;
-                        } else {
-                            spaceToMove++;
-                            squaresBeforeRunOut--;
-                        }
-                    } else if (dir == 4) {
-                        // check if moving out of bounds
-                        if (row == 0 || col == 0) {
-                            return spaceToMove;
-                        }
-                        // check if new square has opponents stones
-                        row--;
-                        col--;
-                        if (stonePosition[row][col] > 0) {
-                            return spaceToMove;
-                        } else {
-                            spaceToMove++;
-                            squaresBeforeRunOut--;
-                        }
-                    } else if (dir == 5) {
-                        // check if moving out of bounds
-                        if (row == 0 || col == 3) {
-                            return spaceToMove;
-                        }
-                        // check if new square has opponents stones
-                        row--;
-                        col++;
-                        if (stonePosition[row][col] > 0) {
-                            return spaceToMove;
-                        } else {
-                            spaceToMove++;
-                            squaresBeforeRunOut--;
-                        }
-                    } else if (dir == 6) {
-                        // check if moving out of bounds
-                        if (row == 3 || col == 0) {
-                            return spaceToMove;
-                        }
-                        // check if new square has opponents stones
-                        row++;
-                        col--;
-                        if (stonePosition[row][col] > 0) {
-                            return spaceToMove;
-                        } else {
-                            spaceToMove++;
-                            squaresBeforeRunOut--;
-                        }
-                    } else if (dir == 7) {
-                        // check if moving out of bounds
-                        if (row == 3 || col == 3) {
-                            return spaceToMove;
-                        }
-                        // check if new square has opponents stones
-                        row++;
-                        col++;
-                        if (stonePosition[row][col] > 0) {
-                            return spaceToMove;
-                        } else {
-                            spaceToMove++;
-                            squaresBeforeRunOut--;
-                        }
-                    }
+        int multiplier = player1Turn ? 1 : -1;
+
+        while (squaresBeforeRunOut > 0) {
+            // check for moves
+            if (dir == 0) {
+                // check if moving out of bounds
+                if (row == 0) {
+                    return spaceToMove;
+                }
+                // check if new square has opponents stones
+                row--;
+                if (doesOpponentPopulate(row, col)) {
+                    return spaceToMove;
+                } else {
+                    spaceToMove++;
+                    squaresBeforeRunOut--;
+                }
+            } else if (dir == 1) {
+                // check if moving out of bounds
+                if (row == 3) {
+                    return spaceToMove;
+                }
+                // check if new square has opponents stones
+                row++;
+                if (doesOpponentPopulate(row, col)) {
+                    return spaceToMove;
+                } else {
+                    spaceToMove++;
+                    squaresBeforeRunOut--;
+                }
+            } else if (dir == 2) {
+                // check if moving out of bounds
+                if (col == 0) {
+                    return spaceToMove;
+                }
+                // check if new square has opponents stones
+                col--;
+                if (doesOpponentPopulate(row, col)) {
+                    return spaceToMove;
+                } else {
+                    spaceToMove++;
+                    squaresBeforeRunOut--;
+                }
+            } else if (dir == 3) {
+                // check if moving out of bounds
+                if (col == 3) {
+                    return spaceToMove;
+                }
+                // check if new square has opponents stones
+                col++;
+                if (doesOpponentPopulate(row, col)) {
+                    return spaceToMove;
+                } else {
+                    spaceToMove++;
+                    squaresBeforeRunOut--;
+                }
+            } else if (dir == 4) {
+                // check if moving out of bounds
+                if (row == 0 || col == 0) {
+                    return spaceToMove;
+                }
+                // check if new square has opponents stones
+                row--;
+                col--;
+                if (doesOpponentPopulate(row, col)) {
+                    return spaceToMove;
+                } else {
+                    spaceToMove++;
+                    squaresBeforeRunOut--;
+                }
+            } else if (dir == 5) {
+                // check if moving out of bounds
+                if (row == 0 || col == 3) {
+                    return spaceToMove;
+                }
+                // check if new square has opponents stones
+                row--;
+                col++;
+                if (doesOpponentPopulate(row, col)) {
+                    return spaceToMove;
+                } else {
+                    spaceToMove++;
+                    squaresBeforeRunOut--;
+                }
+            } else if (dir == 6) {
+                // check if moving out of bounds
+                if (row == 3 || col == 0) {
+                    return spaceToMove;
+                }
+                // check if new square has opponents stones
+                row++;
+                col--;
+                if (doesOpponentPopulate(row, col)) {
+                    return spaceToMove;
+                } else {
+                    spaceToMove++;
+                    squaresBeforeRunOut--;
+                }
+            } else if (dir == 7) {
+                // check if moving out of bounds
+                if (row == 3 || col == 3) {
+                    return spaceToMove;
+                }
+                // check if new square has opponents stones
+                row++;
+                col++;
+                if (doesOpponentPopulate(row, col)) {
+                    return spaceToMove;
+                } else {
+                    spaceToMove++;
+                    squaresBeforeRunOut--;
                 }
             }
         }
@@ -315,7 +199,6 @@ public class Board {
     }
 
     /**
-     *
      * @param dir - the direction we want to move in
      *            0 -> up vertically
      *            1 -> down vertically
@@ -349,14 +232,12 @@ public class Board {
                 if (toMove == 1) {
                     row--;
                     tempStonePosition[row][col] += movingStones;
-                }
-                if (toMove == 2) {
+                } else if (toMove == 2) {
                     row--;
                     tempStonePosition[row][col] += 1;
                     row--;
                     tempStonePosition[row][col] += movingStones - 1;
-                }
-                if (toMove == 3) {
+                } else if (toMove == 3) {
                     row--;
                     tempStonePosition[row][col] += 1;
                     row--;
@@ -707,5 +588,14 @@ public class Board {
 
         // returns a new board with opposite turn
         return new Board(tempStonePosition, !player1Turn);
+    }
+
+    private boolean doesOpponentPopulate(byte row, byte col) {
+        if (player1Turn) {
+            if (stonePosition[row][col] < 0) return true;
+        } else {
+            if (stonePosition[row][col] > 0) return true;
+        }
+        return false;
     }
 }
