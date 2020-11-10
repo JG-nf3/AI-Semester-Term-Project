@@ -34,37 +34,35 @@ public class Node {
         return move;
     }
 
-    public byte getDepth(){
+    public byte getDepth() {
         return depth;
     }
 
 
-    public int getScore(){
+    public int getScore() {
         return score;
     }
 
-    public void generateScore(){
-        if(isLeaf()){
+    public void generateScore() {
+        if (isLeaf()) {
             score = state.getScore();
-        }
-        else{
+        } else {
             //even depth means max node
-            if(depth % 2 == 0){
+            if (depth % 2 == 0) {
                 int max = children.get(0).getScore();
                 int numOfChildern = children.size();
-                for(int i = 1; i < numOfChildern; i++){
-                    if(children.get(i).getScore() > max){
+                for (int i = 1; i < numOfChildern; i++) {
+                    if (children.get(i).getScore() > max) {
                         max = children.get(i).getScore();
                     }
                 }
                 score = max;
-            }
-            else{
+            } else {
                 //even depth means min node
                 int min = children.get(0).getScore();
                 int numOfChildern = children.size();
-                for(int i = 1; i < numOfChildern; i++){
-                    if(children.get(i).getScore() < min){
+                for (int i = 1; i < numOfChildern; i++) {
+                    if (children.get(i).getScore() < min) {
                         min = children.get(i).getScore();
                     }
                 }
@@ -75,10 +73,9 @@ public class Node {
         }
 
 
-
     }
 
-    public Board getBoard(){
+    public Board getBoard() {
         return state;
     }
 
@@ -90,22 +87,24 @@ public class Node {
         return children;
     }
 
-    public void makeChildern(){
+    public void makeChildren() {
         List<byte[]> moves = getLegalMoves();
-        for(int i = 0; i < moves.size(); i++){
+        for (int i = 0; i < moves.size(); i++) {
             byte[] temp = moves.get(i);
             children.add(new Node(this, state.newBoard(temp[0], temp[1], temp[2]), temp));
         }
         hasBeenExpanded = true;
-        if(children.size() != 0){ state=null; }
+        if (children.size() != 0) {
+            state = null;
+        }
     }
 
-    public boolean isLeaf(){
+    public boolean isLeaf() {
         return children.size() == 0;
     }
 
     public List<byte[]> getLegalMoves() {
-        List<byte[]> moves= new ArrayList<byte[]>();
+        List<byte[]> moves = new ArrayList<byte[]>();
 
         for (byte row = 0; row < 4; row++) {
             for (byte col = 0; col < 4; col++) {

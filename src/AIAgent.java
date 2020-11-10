@@ -19,9 +19,9 @@ public class AIAgent {
         if (legalMoves.size() < 1) return;
         System.out.println(legalMoves.size() + " legal moves available for ai agent");
 
-        // Choose a move randomly from the list of legal moves
+        // Choose the best move from the given tree
         byte[] chosenMove = tree.getBestMove();
-        //System.out.println(chosenMove[0] + " " + chosenMove[1] + " " + chosenMove[2]);
+        System.out.println(chosenMove[0] + " " + chosenMove[1] + " " + chosenMove[2]);
 
         // Move the game to the next turn
         // in getLegalMoves we return a list of byte arrays, which each contain a row, column, and direction

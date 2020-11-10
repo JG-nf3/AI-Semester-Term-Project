@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Tree {
     private Node root;
     private int defaultDepth;
@@ -9,52 +7,46 @@ public class Tree {
         defaultDepth = 4;
     }
 
-    public void generateOneStep(int depth, int currentDepth, Node currentNode){
-        if(currentDepth < depth){
-            if(! currentNode.getHasBeenExpanded() ){
-                currentNode.makeChildern();
+    public void generateOneStep(int depth, int currentDepth, Node currentNode) {
+        if (currentDepth < depth) {
+            if (!currentNode.getHasBeenExpanded()) {
+                currentNode.makeChildren();
             }
 
-            int numOfChildern = currentNode.getChildren().size();
-            for(int i = 0; i < numOfChildern; i++){
-                generateOneStep(depth, currentDepth+1, currentNode.getChildren().get(i));
+            int numOfChildren = currentNode.getChildren().size();
+            for (int i = 0; i < numOfChildren; i++) {
+                generateOneStep(depth, currentDepth + 1, currentNode.getChildren().get(i));
             }
-            currentNode.generateScore();
-        }
-        else{
-            currentNode.generateScore();
         }
 
+        currentNode.generateScore();
     }
 
-    public void generateToDepth(){
+    public void generateToDepth() {
         generateOneStep(defaultDepth, 0, root);
     }
 
-    public void generateScores(Node currentNode){
-        if(currentNode.isLeaf()){
-            currentNode.generateScore();
-        }
-        else{
+    public void generateScores(Node currentNode) {
+        if (!currentNode.isLeaf()) {
             int numOfChildern = currentNode.getChildren().size();
-            for(int i = 0; i < numOfChildern; i++){
+            for (int i = 0; i < numOfChildern; i++) {
                 generateScores(currentNode.getChildren().get(i));
             }
-            currentNode.generateScore();
         }
+        currentNode.generateScore();
     }
 
-    public byte[] getBestMove(){
+    public byte[] getBestMove() {
         generateToDepth();
         //generateScores(root);
 
-        int numOfChildern = root.getChildren().size();
+        int numOfChildren = root.getChildren().size();
 
-        for(int i = 0; i < numOfChildern; i++){
+        for (int i = 0; i < numOfChildren; i++) {
 
             byte[] temp = root.getChildren().get(i).getMove();
-            if(root.getChildren().get(i).getScore() == root.getScore()){
-                if(root.getScore() >= 1000){
+            if (root.getChildren().get(i).getScore() == root.getScore()) {
+                if (root.getScore() >= 1000) {
                     defaultDepth = 24;
                 }
                 return root.getChildren().get(i).getMove();
