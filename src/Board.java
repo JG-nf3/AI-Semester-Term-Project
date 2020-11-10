@@ -5,10 +5,12 @@ public class Board {
      * If a square has a Negative number of stones, that means Player 2 has that number in that square
      **/
     private final byte[][] stonePosition;
+
     /**
      * true if it is player 1's turn, false otherwise
      */
-    private final boolean player1Turn;
+    //changed from: private final boolean player1Turn;
+    private boolean player1Turn;
 
     public Board() {
         // Initial board setup, a 4x4 2d array to store all the squares
@@ -195,6 +197,7 @@ public class Board {
                 }
             }
         }
+
 
         return spaceToMove;
     }
@@ -410,5 +413,46 @@ public class Board {
         } else {
             return stonePosition[row][col] > 0;
         }
+    }
+
+    public int getScore() {
+        int total = 0;
+        boolean hold = player1Turn;
+
+        player1Turn = true;
+        for (byte row = 0; row < 4; row++) {
+            for (byte col = 0; col < 4; col++) {
+                for (byte dir = 0; dir < 8; dir++) {
+                    byte tempByte = validMove(row, col, dir);
+                    if(tempByte > 0){
+                        total -= 5 + tempByte;
+
+                    }
+                }
+            }
+        }
+        // case for winning move
+        if(total == 0){ return Integer.MAX_VALUE; }
+        //else if(total == -6){ return Integer.MAX_VALUE-1; }
+        //else if(total == -7){ return Integer.MAX_VALUE-2; }
+        //else if(total == -8){ return Integer.MAX_VALUE-3; }
+        else if(total >= -80){ total += 1000; }
+
+
+        player1Turn = false;
+        for (byte row = 0; row < 4; row++) {
+            for (byte col = 0; col < 4; col++) {
+                for (byte dir = 0; dir < 8; dir++) {
+                    byte tempByte = validMove(row, col, dir);
+                    if(tempByte > 0){
+                        total += 5 + tempByte;
+                    }
+                }
+            }
+        }
+
+
+        player1Turn = hold;
+        return total;
     }
 }

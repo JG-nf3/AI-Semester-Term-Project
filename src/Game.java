@@ -58,5 +58,4 @@ public class Game {
 
         return moves;
     }
-
 }
