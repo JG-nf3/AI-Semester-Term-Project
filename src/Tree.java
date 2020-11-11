@@ -1,5 +1,5 @@
 public class Tree {
-    private Node root;
+    private final Node root;
     private int defaultDepth;
 
     public Tree(Node root) {
@@ -28,8 +28,8 @@ public class Tree {
 
     public void generateScores(Node currentNode) {
         if (!currentNode.isLeaf()) {
-            int numOfChildern = currentNode.getChildren().size();
-            for (int i = 0; i < numOfChildern; i++) {
+            int numOfChildren = currentNode.getChildren().size();
+            for (int i = 0; i < numOfChildren; i++) {
                 generateScores(currentNode.getChildren().get(i));
             }
         }
@@ -44,7 +44,6 @@ public class Tree {
 
         for (int i = 0; i < numOfChildren; i++) {
 
-            byte[] temp = root.getChildren().get(i).getMove();
             if (root.getChildren().get(i).getScore() == root.getScore()) {
                 if (root.getScore() >= 1000) {
                     defaultDepth = 24;

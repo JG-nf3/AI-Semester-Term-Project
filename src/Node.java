@@ -2,13 +2,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Node {
-    private Node parent;
-    private ArrayList<Node> children;
+    private final Node parent;
+    private final ArrayList<Node> children;
     private byte depth;
     private Board state;
     private int score;
     private boolean hasBeenExpanded;
-    private byte[] move;
+    private final byte[] move;
 
     public Node(Node parent, Board state, byte[] move) {
         this.parent = parent;
@@ -17,7 +17,7 @@ public class Node {
         depth = parent.getDepth();
         //java wants this to be two lines not 1
         depth += 1;
-        children = new ArrayList<Node>(200);
+        children = new ArrayList<>(200);
         hasBeenExpanded = false;
     }
 
@@ -26,7 +26,7 @@ public class Node {
         this.state = state;
         move = null;
         depth = 0;
-        children = new ArrayList<Node>(20);
+        children = new ArrayList<>(20);
         hasBeenExpanded = false;
     }
 
@@ -37,7 +37,6 @@ public class Node {
     public byte getDepth() {
         return depth;
     }
-
 
     public int getScore() {
         return score;
@@ -50,8 +49,8 @@ public class Node {
             //even depth means max node
             if (depth % 2 == 0) {
                 int max = children.get(0).getScore();
-                int numOfChildern = children.size();
-                for (int i = 1; i < numOfChildern; i++) {
+                int numOfChildren = children.size();
+                for (int i = 1; i < numOfChildren; i++) {
                     if (children.get(i).getScore() > max) {
                         max = children.get(i).getScore();
                     }
@@ -60,8 +59,8 @@ public class Node {
             } else {
                 //even depth means min node
                 int min = children.get(0).getScore();
-                int numOfChildern = children.size();
-                for (int i = 1; i < numOfChildern; i++) {
+                int numOfChildren = children.size();
+                for (int i = 1; i < numOfChildren; i++) {
                     if (children.get(i).getScore() < min) {
                         min = children.get(i).getScore();
                     }
@@ -89,8 +88,7 @@ public class Node {
 
     public void makeChildren() {
         List<byte[]> moves = getLegalMoves();
-        for (int i = 0; i < moves.size(); i++) {
-            byte[] temp = moves.get(i);
+        for (byte[] temp : moves) {
             children.add(new Node(this, state.newBoard(temp[0], temp[1], temp[2]), temp));
         }
         hasBeenExpanded = true;
@@ -104,7 +102,7 @@ public class Node {
     }
 
     public List<byte[]> getLegalMoves() {
-        List<byte[]> moves = new ArrayList<byte[]>();
+        List<byte[]> moves = new ArrayList<>();
 
         for (byte row = 0; row < 4; row++) {
             for (byte col = 0; col < 4; col++) {

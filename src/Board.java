@@ -230,7 +230,7 @@ public class Board {
         // set the current position to 0 now
         tempStonePosition[row][col] = 0;
 
-        // Create a multiplier based on whos turn it is
+        // Create a multiplier based on whose turn it is
         // so we move around the correct numbers of stones
         int multiplier = player1Turn ? 1 : -1;
 
@@ -424,7 +424,7 @@ public class Board {
             for (byte col = 0; col < 4; col++) {
                 for (byte dir = 0; dir < 8; dir++) {
                     byte tempByte = validMove(row, col, dir);
-                    if(tempByte > 0){
+                    if (tempByte > 0) {
                         total -= 5 + tempByte;
 
                     }
@@ -432,11 +432,15 @@ public class Board {
             }
         }
         // case for winning move
-        if(total == 0){ return Integer.MAX_VALUE; }
+        if (total == 0) {
+            return Integer.MAX_VALUE;
+        }
         //else if(total == -6){ return Integer.MAX_VALUE-1; }
         //else if(total == -7){ return Integer.MAX_VALUE-2; }
         //else if(total == -8){ return Integer.MAX_VALUE-3; }
-        else if(total >= -80){ total += 1000; }
+        else if (total >= -80) {
+            total += 1000;
+        }
 
 
         player1Turn = false;
@@ -444,7 +448,7 @@ public class Board {
             for (byte col = 0; col < 4; col++) {
                 for (byte dir = 0; dir < 8; dir++) {
                     byte tempByte = validMove(row, col, dir);
-                    if(tempByte > 0){
+                    if (tempByte > 0) {
                         total += 5 + tempByte;
                     }
                 }

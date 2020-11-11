@@ -1,5 +1,3 @@
-import java.util.List;
-
 public class AIAgent {
     private final Game game;
     private Tree tree;
@@ -12,12 +10,6 @@ public class AIAgent {
     public void move() {
         System.out.println("AI turn");
         tree = new Tree(new Node(game.getBoard()));
-
-        // Gets the list of currently legal moves from the game
-        List<byte[]> legalMoves = game.getLegalMoves();
-        // If there are no legal moves, don't try to chose one
-        if (legalMoves.size() < 1) return;
-        System.out.println(legalMoves.size() + " legal moves available for ai agent");
 
         // Choose the best move from the given tree
         byte[] chosenMove = tree.getBestMove();

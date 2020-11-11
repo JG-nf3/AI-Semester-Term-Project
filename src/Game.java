@@ -34,13 +34,12 @@ public class Game {
     }
 
     /**
-     *
      * @return a List of byte arrays that contain legal moves
-     *         these byte arrays should be of length 3 and contain
-     *         the row, col, and dir, in that order
+     * these byte arrays should be of length 3 and contain
+     * the row, col, and dir, in that order
      */
     public List<byte[]> getLegalMoves() {
-        List<byte[]> moves= new ArrayList<byte[]>();
+        List<byte[]> moves = new ArrayList<>();
 
         for (byte row = 0; row < 4; row++) {
             for (byte col = 0; col < 4; col++) {
