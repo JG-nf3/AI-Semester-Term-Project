@@ -16,7 +16,7 @@ public class AIAgent {
         System.out.println(chosenMove[0] + " " + chosenMove[1] + " " + chosenMove[2]);
 
         // Move the game to the next turn
-        // in getLegalMoves we return a list of byte arrays, which each contain a row, column, and direction
+        // in getBestMove we return a list of byte arrays, which each contain a row, column, and direction
         game.nextTurn(chosenMove[0], chosenMove[1], chosenMove[2]);
     }
 }

@@ -39,12 +39,15 @@ public class Game {
      * the row, col, and dir, in that order
      */
     public List<byte[]> getLegalMoves() {
+        // List to store the legal moves for returning
         List<byte[]> moves = new ArrayList<>();
 
         for (byte row = 0; row < 4; row++) {
             for (byte col = 0; col < 4; col++) {
                 for (byte dir = 0; dir < 8; dir++) {
+                    // Loop through every move and check if the move is legal
                     if (isLegal(row, col, dir)) {
+                        // if it is, then put it in the correct byte[] format and add it to our list of moves
                         byte[] move = new byte[3];
                         move[0] = row;
                         move[1] = col;
@@ -55,6 +58,7 @@ public class Game {
             }
         }
 
+        // Return our list of legal moves
         return moves;
     }
 }

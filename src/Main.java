@@ -8,15 +8,20 @@ public class Main {
         AIAgent aiAgent = new AIAgent(conga.getGame());
         while (true) {
             if (conga.getGame().isOver()) {
+                // If the game is over & we're on player 1's turn, then player 2 won on their last move
                 System.out.print(conga.getGame().getBoard().getPlayer1Turn() ? "Player 2 won in " : "Player 1 won in ");
                 System.out.println(moveCount + " moves");
-                return;
+                break;
             }
-            if (!conga.getGame().getBoard().getPlayer1Turn()) {
-                aiAgent.move();
-            } else {
+            if (conga.getGame().getBoard().getPlayer1Turn()) {
+                // Random agent plays as player 1
                 randomAgent.move();
+            } else {
+                // and AI Agent plays as player 2
+                aiAgent.move();
             }
+
+            // update the UI & moveCount
             conga.updateUIForNewTurn();
             moveCount++;
             System.out.println("Finished move " + moveCount);

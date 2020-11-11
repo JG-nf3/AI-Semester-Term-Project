@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class UI extends JFrame {
     private JLabel currentTurn;
@@ -206,5 +207,10 @@ public class UI extends JFrame {
                 currentTurn.setText("Player 2 turn");
             }
         }
+    }
+
+    public void restartGame() {
+        game = new Game();
+        updateUIForNewTurn();
     }
 }
