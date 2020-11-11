@@ -51,8 +51,7 @@ public class Tree {
                 return root.getChildren().get(i).getMove();
             }
         }
-
-
+        
         return null;
     }
 }
