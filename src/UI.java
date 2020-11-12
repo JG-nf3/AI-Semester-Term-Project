@@ -92,9 +92,9 @@ public class UI extends JFrame {
         dir[7] = new JButton("Down-Right");
         dir[7].setBounds(1100, 360, 200, 40);
 
-        for (int i = 0; i < dir.length; i++) {
-            dir[i].setFont(new Font(dir[i].getFont().getName(), dir[i].getFont().getStyle(), 28));
-            add(dir[i]);
+        for (JButton jButton : dir) {
+            jButton.setFont(new Font(jButton.getFont().getName(), jButton.getFont().getStyle(), 28));
+            add(jButton);
         }
     }
 
@@ -209,6 +209,9 @@ public class UI extends JFrame {
         }
     }
 
+    /**
+     * Creates a new game in the same UI
+     */
     public void restartGame() {
         game = new Game();
         updateUIForNewTurn();

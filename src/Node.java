@@ -42,36 +42,34 @@ public class Node {
         return score;
     }
 
+    /**
+     * Generates the score for the current node using the Minimax algorithm
+     * TODO: implement alpha beta pruning
+     */
     public void generateScore() {
         if (isLeaf()) {
             score = state.getScore();
         } else {
-            //even depth means max node
+            // even depth means max node
             if (depth % 2 == 0) {
                 int max = children.get(0).getScore();
-                int numOfChildren = children.size();
-                for (int i = 1; i < numOfChildren; i++) {
-                    if (children.get(i).getScore() > max) {
-                        max = children.get(i).getScore();
+                for (Node n : children) {
+                    if (n.getScore() > max) {
+                        max = n.getScore();
                     }
                 }
                 score = max;
             } else {
-                //even depth means min node
+                // odd depth means min node
                 int min = children.get(0).getScore();
-                int numOfChildren = children.size();
-                for (int i = 1; i < numOfChildren; i++) {
-                    if (children.get(i).getScore() < min) {
-                        min = children.get(i).getScore();
+                for (Node n : children) {
+                    if (n.getScore() < min) {
+                        min = n.getScore();
                     }
                 }
                 score = min;
-
             }
-
         }
-
-
     }
 
     public Board getBoard() {
@@ -86,12 +84,19 @@ public class Node {
         return children;
     }
 
+    /**
+     * Makes the child nodes for us, the successor function
+     */
     public void makeChildren() {
+        // Get all the legal moves from the current node
         List<byte[]> moves = getLegalMoves();
+        // For each move that we have, we need to add a new child with the updated board state
         for (byte[] temp : moves) {
             children.add(new Node(this, state.newBoard(temp[0], temp[1], temp[2]), temp));
         }
+        // After we've made its children we can mark our current node as having been expanded
         hasBeenExpanded = true;
+        // If we have a nonzero amount of children, we delete the state of the current node
         if (children.size() != 0) {
             state = null;
         }
@@ -101,6 +106,11 @@ public class Node {
         return children.size() == 0;
     }
 
+    /**
+     * Gets all legal moves from the current nodes state
+     *
+     * @return - a list of 3 length byte arrays containing the moves
+     */
     public List<byte[]> getLegalMoves() {
         List<byte[]> moves = new ArrayList<>();
 
