@@ -46,28 +46,39 @@ public class Node {
      * Generates the score for the current node using the Minimax algorithm
      * TODO: implement alpha beta pruning
      */
-    public void generateScore() {
-        if (isLeaf()) {
+    public int generateScore(int alpha, int beta) {
+        if (isLeaf() || depth == 4) {
             score = state.getScore();
+            return score;
         } else {
             // even depth means max node
             if (depth % 2 == 0) {
-                int max = children.get(0).getScore();
+                int best = Integer.MIN_VALUE;
+
                 for (Node n : children) {
-                    if (n.getScore() > max) {
-                        max = n.getScore();
-                    }
+                    int val = generateScore(alpha, beta);
+                    best = Math.max(best, val);
+                    alpha = Math.max(alpha, best);
+
+                    if (beta <= alpha)
+                        break;
                 }
-                score = max;
+                score = best;
+                return score;
             } else {
                 // odd depth means min node
-                int min = children.get(0).getScore();
+                int best = Integer.MAX_VALUE;
+
                 for (Node n : children) {
-                    if (n.getScore() < min) {
-                        min = n.getScore();
-                    }
+                    int val = generateScore(alpha, beta);
+                    best = Math.min(best, val);
+                    beta = Math.min(beta, best);
+
+                    if (beta <= alpha)
+                        break;
                 }
-                score = min;
+                score = best;
+                return score;
             }
         }
     }

@@ -11,7 +11,7 @@ public class Main {
         int totalMovesP2 = 0;
         int stuckCounter = 0;
 
-        final int gamesToRun = 25;
+        final int gamesToRun = 10;
 
         for (int i = 0; i < gamesToRun; i++) {
             int moveCount = 0;

@@ -28,7 +28,7 @@ public class Tree {
             }
         }
 
-        currentNode.generateScore();
+        //currentNode.generateScore();
     }
 
     /**
@@ -46,6 +46,8 @@ public class Tree {
     public byte[] getBestMove() {
         // Generate the tree to the default depth
         generateToDepth();
+
+        root.generateScore(Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         int numOfChildren = root.getChildren().size();
 
