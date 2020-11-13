@@ -56,7 +56,7 @@ public class Node {
                 int best = Integer.MIN_VALUE;
 
                 for (Node n : children) {
-                    int val = generateScore(alpha, beta);
+                    int val = n.generateScore(alpha, beta);
                     best = Math.max(best, val);
                     alpha = Math.max(alpha, best);
 
@@ -70,7 +70,7 @@ public class Node {
                 int best = Integer.MAX_VALUE;
 
                 for (Node n : children) {
-                    int val = generateScore(alpha, beta);
+                    int val = n.generateScore(alpha, beta);
                     best = Math.min(best, val);
                     beta = Math.min(beta, best);
 
