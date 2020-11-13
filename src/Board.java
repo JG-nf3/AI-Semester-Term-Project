@@ -5,10 +5,12 @@ public class Board {
      * If a square has a Negative number of stones, that means Player 2 has that number in that square
      **/
     private final byte[][] stonePosition;
+
     /**
      * true if it is player 1's turn, false otherwise
      */
-    private final boolean player1Turn;
+    //changed from: private final boolean player1Turn;
+    private boolean player1Turn;
 
     public Board() {
         // Initial board setup, a 4x4 2d array to store all the squares
@@ -196,6 +198,7 @@ public class Board {
             }
         }
 
+
         return spaceToMove;
     }
 
@@ -227,7 +230,7 @@ public class Board {
         // set the current position to 0 now
         tempStonePosition[row][col] = 0;
 
-        // Create a multiplier based on whos turn it is
+        // Create a multiplier based on whose turn it is
         // so we move around the correct numbers of stones
         int multiplier = player1Turn ? 1 : -1;
 
@@ -410,5 +413,74 @@ public class Board {
         } else {
             return stonePosition[row][col] > 0;
         }
+    }
+
+    /**
+     * Calculates the heuristic function h for the board
+     *
+     * @return the heuristic value for the board
+     */
+    public int getScore() {
+        // total score
+        int total = 0;
+        // keep track of whose turn it is
+        boolean hold = player1Turn;
+
+        // set player1turn to true so we can use validMove
+        // the random agent is player 1
+        player1Turn = true;
+        for (byte row = 0; row < 4; row++) {
+            for (byte col = 0; col < 4; col++) {
+                for (byte dir = 0; dir < 8; dir++) {
+                    // Loop through all the locations on the board and check if they are a valid move
+                    // for player 1
+                    byte tempByte = validMove(row, col, dir);
+
+                    if (tempByte > 0) {
+                        // If that is a valid move, then reduce the total by 5 + the number of squares we can move
+                        // because player 1 in our game is the min agent
+                        total -= 5 + tempByte;
+                    }
+                }
+            }
+        }
+
+        // case for winning move
+        // if total is still 0 at this point then that means the random agent
+        // has no valid moves, so we want to return the maximum integer value
+        // so that our minimax will ALWAYS take this path
+        if (total == 0) {
+            return Integer.MAX_VALUE;
+        }
+
+        //else if(total == -6){ return Integer.MAX_VALUE-1; }
+        //else if(total == -7){ return Integer.MAX_VALUE-2; }
+        //else if(total == -8){ return Integer.MAX_VALUE-3; }
+
+        // If the random agent has a score between -80 and 0 on this board we want to increase the total
+        // significantly so that it increases our odds of taking this path
+        else if (total >= -80) {
+            total += 1000;
+        }
+
+        // Now set player1Turn to false to check our minimax agent's moves
+        player1Turn = false;
+        for (byte row = 0; row < 4; row++) {
+            for (byte col = 0; col < 4; col++) {
+                for (byte dir = 0; dir < 8; dir++) {
+                    // Loop through all the moves for the minimax agent finding valid ones
+                    byte tempByte = validMove(row, col, dir);
+                    // If its valid move increase the total by 5 + the number of squares we can move
+                    if (tempByte > 0) {
+                        total += 5 + tempByte;
+                    }
+                }
+            }
+        }
+
+        // Restore player1Turn to its value from the beginning of the method call
+        player1Turn = hold;
+        // and return our heuristic
+        return total;
     }
 }
