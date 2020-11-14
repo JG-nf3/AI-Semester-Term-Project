@@ -18,9 +18,7 @@ public class Node {
         this.parent = parent;
         this.state = state;
         this.move = move;
-        depth = parent.getDepth();
-        //java wants this to be two lines not 1
-        depth += 1;
+        depth = (byte) (parent.getDepth() + 1);
         children = new ArrayList<>(4000);
         hasBeenExpanded = false;
 
@@ -148,7 +146,7 @@ public class Node {
         return state;
     }
 
-    public boolean getHasBeenExpanded() {
+    public boolean wasExpanded() {
         return hasBeenExpanded;
     }
 
@@ -175,12 +173,10 @@ public class Node {
     }
 
 
-
     public void makeChildrenOfRoot(int depth, int currentDepth) {
         //System.out.println("make move");
 
         alpha = Integer.MIN_VALUE;
-
 
 
         // Get all the legal moves from the current node
@@ -189,9 +185,9 @@ public class Node {
         for (int i = 0; i < size; i++) {
             byte[] temp = moves.get(i);
             Node tempNode = new Node(this, state.newBoard(temp[0], temp[1], temp[2]), temp);
-            tempNode.makeChildrenMin(depth, currentDepth+1);
+            tempNode.makeChildrenMin(depth, currentDepth + 1);
             children.add(tempNode);
-            if(children.get(i).getBeta() > alpha){
+            if (children.get(i).getBeta() > alpha) {
                 alpha = children.get(i).getBeta();
             }
         }
@@ -209,10 +205,9 @@ public class Node {
     public void makeChildrenMin(int depth, int currentDepth) {
         //System.out.println("    call MIN");
         // case of leaf node stop making children
-        if(currentDepth == depth){
+        if (currentDepth == depth) {
             beta = state.getScore();
-        }
-        else{
+        } else {
             // Get all the legal moves from the current node
             List<byte[]> moves = getLegalMoves();
             int size = moves.size();
@@ -222,13 +217,13 @@ public class Node {
                 beta = state.getScore();
             }
             // else keep going down tree
-            else{
+            else {
                 for (int i = 0; beta > parent.alpha && i < size; i++) {
                     byte[] temp = moves.get(i);
                     Node tempNode = new Node(this, state.newBoard(temp[0], temp[1], temp[2]), temp);
-                    tempNode.makeChildrenMax(depth, currentDepth+1);
+                    tempNode.makeChildrenMax(depth, currentDepth + 1);
                     children.add(tempNode);
-                    if(children.get(i).getAlpha() < beta){
+                    if (children.get(i).getAlpha() < beta) {
                         beta = children.get(i).getAlpha();
                     }
                 }
@@ -241,7 +236,7 @@ public class Node {
 
 
         // update alpha of parent
-        if(beta > parent.alpha){
+        if (beta > parent.alpha) {
             parent.alpha = beta;
         }
 
@@ -252,11 +247,10 @@ public class Node {
 
     public void makeChildrenMax(int depth, int currentDepth) {
         // case of leaf node stop making children
-        if(currentDepth == depth){
+        if (currentDepth == depth) {
             alpha = state.getScore();
             //System.out.println("        " + alpha);
-        }
-        else{
+        } else {
             // Get all the legal moves from the current node
             List<byte[]> moves = getLegalMoves();
             int size = moves.size();
@@ -266,13 +260,13 @@ public class Node {
                 alpha = state.getScore();
             }
             // else keep going down tree
-            else{
+            else {
                 for (int i = 0; alpha < parent.beta && i < size; i++) {
                     byte[] temp = moves.get(i);
                     Node tempNode = new Node(this, state.newBoard(temp[0], temp[1], temp[2]), temp);
-                    tempNode.makeChildrenMin(depth, currentDepth+1);
+                    tempNode.makeChildrenMin(depth, currentDepth + 1);
                     children.add(tempNode);
-                    if(children.get(i).getBeta() > alpha){
+                    if (children.get(i).getBeta() > alpha) {
                         alpha = children.get(i).getBeta();
                     }
                 }
@@ -285,7 +279,7 @@ public class Node {
 
 
         // update alpha of parent
-        if(alpha < parent.beta){
+        if (alpha < parent.beta) {
             parent.beta = alpha;
         }
 

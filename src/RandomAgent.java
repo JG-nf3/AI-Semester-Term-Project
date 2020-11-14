@@ -3,16 +3,16 @@ import java.util.Random;
 
 public class RandomAgent {
     private Game game;
+    private Random rng;
 
     public RandomAgent(Game game) {
         this.game = game;
+        // RNG used for choosing our move
+        this.rng = new Random();
         System.out.println("random agent instantiated");
     }
 
     public void move() {
-        // RNG used for choosing our move
-        Random rng = new Random();
-
         //System.out.println("RA turn");
         // Gets the list of currently legal moves from the game
         List<byte[]> legalMoves = game.getLegalMoves();

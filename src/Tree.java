@@ -17,7 +17,7 @@ public class Tree {
     public void generateOneStepForFullTree(int depth, int currentDepth, Node currentNode) {
         // If the depth we are currently at is less than our total depth then we want to generate its children
         if (currentDepth < depth) {
-            if (!currentNode.getHasBeenExpanded()) {
+            if (!currentNode.wasExpanded()) {
                 // Make sure the current node hasn't been expanded already and make its children
                 currentNode.makeChildren();
             }
@@ -31,16 +31,15 @@ public class Tree {
     }
 
 
-
-    public void generateOneStep(int depth, int currentDepth, Node currentNode){
-        if(currentDepth < depth){
-            if(! currentNode.getHasBeenExpanded() ){
+    public void generateOneStep(int depth, int currentDepth, Node currentNode) {
+        if (currentDepth < depth) {
+            if (!currentNode.wasExpanded()) {
                 currentNode.makeChildren();
             }
 
             int numOfChildern = currentNode.getChildren().size();
-            for(int i = 0; i < numOfChildern; i++){
-                generateOneStep(depth, currentDepth+1, currentNode.getChildren().get(i));
+            for (int i = 0; i < numOfChildern; i++) {
+                generateOneStep(depth, currentDepth + 1, currentNode.getChildren().get(i));
             }
         }
 
@@ -82,7 +81,6 @@ public class Tree {
         generateToDepthForFullTree();
 
         root.generateScoreForFullTree(Integer.MIN_VALUE, Integer.MAX_VALUE);
-
 
 
         int numOfChildren = root.getChildren().size();
