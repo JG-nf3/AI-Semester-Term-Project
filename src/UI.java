@@ -18,41 +18,58 @@ public class UI extends JFrame {
 
     private Game game;
 
+    /**
+     * Default constructor
+     */
     public UI() {
+        // Title the window and set its size
         setTitle("Conga");
         setSize(1500, 1100);
 
+        // No row, col, or dir selected initially
         selectedRow = -1;
         selectedCol = -1;
         selectedDir = -1;
 
+        // Create a new game instance
         game = new Game();
 
-        initComponent();
+        // Initialize components & events then make our window visible
+        initComponents();
         initEvent();
         setVisible(true);
     }
 
-    private void initComponent() {
+    /**
+     * Initializes all components and adds them to the JFrame
+     */
+    private void initComponents() {
+        // Setup the buttons for the squares and direction selectors
         setupSquare();
         setupDirection();
 
+        // Move button setup
         move = new JButton("Move");
         move.setBounds(875, 300, 200, 40);
         move.setFont(new Font(move.getFont().getName(), move.getFont().getStyle(), 28));
         add(move);
 
-
+        // Label for whose turn it is
         currentTurn = new JLabel("Player 1 turn");
         currentTurn.setFont(new Font(currentTurn.getFont().getName(), currentTurn.getFont().getStyle(), 28));
         currentTurn.setBounds(650, 420, 800, 200);
         add(currentTurn);
     }
 
+    /**
+     * Initializes all the square buttons
+     */
     private void setupSquare() {
+        // Initializes a 4x4 JButton arrray to store the squares
         square = new JButton[4][4];
         for (int row = 0; row < square.length; row++) {
             for (int col = 0; col < square[row].length; col++) {
+                // Loops through creating 16 squares in the array with their appropriate positioning
                 String title = "0";
                 square[row][col] = new JButton(title);
                 square[row][col].setBounds(120 + col * 100, 100 + row * 100, 85, 85);
@@ -61,13 +78,19 @@ public class UI extends JFrame {
             }
         }
 
+        // Give the top left and bottom right squares appropriate labels
         square[0][0].setText("+10");
         square[3][3].setText("-10");
     }
 
+    /**
+     * Initialize all the direction selectors
+     */
     private void setupDirection() {
+        // Dir is an 8 length JButton array
         dir = new JButton[8];
 
+        // Create the various buttons with the appropriate labels
         dir[0] = new JButton("Up");
         dir[0].setBounds(875, 240, 200, 40);
 
@@ -92,20 +115,26 @@ public class UI extends JFrame {
         dir[7] = new JButton("Down-Right");
         dir[7].setBounds(1100, 360, 200, 40);
 
+        // Loop through and set all their fonts correctly and add them to the JFrame
         for (JButton jButton : dir) {
             jButton.setFont(new Font(jButton.getFont().getName(), jButton.getFont().getStyle(), 28));
             add(jButton);
         }
     }
 
+    /**
+     * Initializes event handlers
+     */
     private void initEvent() {
 
+        // If the window closes, we need to exit
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 System.exit(1);
             }
         });
 
+        // Loop through all the square buttons and add action listeners for when they are clicked
         for (int row = 0; row < square.length; row++) {
             for (int col = 0; col < square[row].length; col++) {
                 int finalRow = row;
@@ -120,6 +149,7 @@ public class UI extends JFrame {
             }
         }
 
+        // Loop through all the direction buttons and add action listeners for when they are clicked
         for (int i = 0; i < dir.length; i++) {
             int finalI = i;
             dir[i].addActionListener(e -> {
@@ -130,6 +160,7 @@ public class UI extends JFrame {
             });
         }
 
+        // Add an action listener to the move button for when we click that
         move.addActionListener(e -> {
             // checks if a square and move is selected
             if (selectedDir != -1 && selectedRow != -1) {
@@ -144,21 +175,30 @@ public class UI extends JFrame {
         });
     }
 
+    /**
+     * Clears the background of all the squares
+     */
     private void clearSquareBGs() {
         for (int row = 0; row < square.length; row++) {
             for (int col = 0; col < square[row].length; col++) {
                 square[row][col].setBackground(null);
-                //square[row][col].setOpaque(true);
             }
         }
     }
 
+    /**
+     * Clears the background of all the direction buttons
+     */
     private void clearDirBGs() {
         for (int i = 0; i < 8; i++) {
             dir[i].setBackground(null);
         }
     }
 
+    /**
+     * Updates the labels of all of the square buttons
+     * to reflect the positions of the stones on the board
+     */
     private void update() {
         byte[][] temp = game.getBoard().getStonePosition();
 
@@ -177,6 +217,9 @@ public class UI extends JFrame {
         }
     }
 
+    /**
+     * Does various tasks to update the UI for the new turn
+     */
     public void updateUIForNewTurn() {
         // updates the square labels
         update();
@@ -189,7 +232,6 @@ public class UI extends JFrame {
         selectedDir = -1;
 
         // checks if game is done
-        // TODO: move this check to when we do the next turn instead of being in the UI
         if (game.isOver()) {
             if (!game.getBoard().getPlayer1Turn()) {
                 // if it isn't player 1's turn, but the game is over, then player 1 must have won
