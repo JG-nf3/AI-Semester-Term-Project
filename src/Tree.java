@@ -14,7 +14,7 @@ public class Tree {
      * @param currentDepth - current depth
      * @param currentNode  - node to expand
      */
-    public void generateOneStep(int depth, int currentDepth, Node currentNode) {
+    public void generateOneStepForFullTree(int depth, int currentDepth, Node currentNode) {
         // If the depth we are currently at is less than our total depth then we want to generate its children
         if (currentDepth < depth) {
             if (!currentNode.getHasBeenExpanded()) {
@@ -24,18 +24,52 @@ public class Tree {
 
             // Loop through each child and recursively generate another step out
             for (Node n : currentNode.getChildren()) {
-                generateOneStep(depth, currentDepth + 1, n);
+                generateOneStepForFullTree(depth, currentDepth + 1, n);
             }
         }
 
-        //currentNode.generateScore();
     }
+
+
+
+    public void generateOneStep(int depth, int currentDepth, Node currentNode){
+        if(currentDepth < depth){
+            if(! currentNode.getHasBeenExpanded() ){
+                currentNode.makeChildren();
+            }
+
+            int numOfChildern = currentNode.getChildren().size();
+            for(int i = 0; i < numOfChildern; i++){
+                generateOneStep(depth, currentDepth+1, currentNode.getChildren().get(i));
+            }
+        }
+
+    }
+
 
     /**
      * Generate the tree from the root to the default depth
      */
+    public void generateToDepthForFullTree() {
+        generateOneStepForFullTree(defaultDepth, 0, root);
+    }
+
     public void generateToDepth() {
-        generateOneStep(defaultDepth, 0, root);
+        root.makeChildrenOfRoot(defaultDepth, 0);
+    }
+
+    public byte[] getBestMove2() {
+        // Generate the tree to the default depth
+        generateToDepth();
+
+        int numOfChildren = root.getChildren().size();
+        for (int i = 0; i < numOfChildren; i++) {
+            if (root.getChildren().get(i).getBeta() == root.getAlpha()) {
+                return root.getChildren().get(i).getMove();
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -45,18 +79,19 @@ public class Tree {
      */
     public byte[] getBestMove() {
         // Generate the tree to the default depth
-        generateToDepth();
+        generateToDepthForFullTree();
 
-        root.generateScore(Integer.MIN_VALUE, Integer.MAX_VALUE);
+        root.generateScoreForFullTree(Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+
 
         int numOfChildren = root.getChildren().size();
 
         for (int i = 0; i < numOfChildren; i++) {
+
             if (root.getChildren().get(i).getScore() == root.getScore()) {
-                if (root.getScore() >= 1000) {
-                    defaultDepth = 24;
-                }
                 return root.getChildren().get(i).getMove();
+
             }
         }
 

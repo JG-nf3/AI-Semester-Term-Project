@@ -3,6 +3,7 @@ public class Main {
     public static void main(String[] args) {
         UI conga = new UI();
 
+
         RandomAgent randomAgent = new RandomAgent(conga.getGame());
         AIAgent aiAgent = new AIAgent(conga.getGame());
 
@@ -11,7 +12,7 @@ public class Main {
         int totalMovesP2 = 0;
         int stuckCounter = 0;
 
-        final int gamesToRun = 300;
+        final int gamesToRun = 10;
 
         for (int i = 0; i < gamesToRun; i++) {
             int moveCount = 0;
@@ -58,4 +59,8 @@ public class Main {
         System.out.println("Total moves made = " + (totalMovesP1 + totalMovesP2));
         System.out.println("The AI Agent got stuck " + stuckCounter + " times over " + gamesToRun + " games");
     }
+
+
+
 }
+

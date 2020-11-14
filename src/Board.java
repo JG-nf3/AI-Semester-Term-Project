@@ -453,16 +453,6 @@ public class Board {
             return Integer.MAX_VALUE;
         }
 
-        //else if(total == -6){ return Integer.MAX_VALUE-1; }
-        //else if(total == -7){ return Integer.MAX_VALUE-2; }
-        //else if(total == -8){ return Integer.MAX_VALUE-3; }
-
-        // If the random agent has a score between -80 and 0 on this board we want to increase the total
-        // significantly so that it increases our odds of taking this path
-        else if (total >= -80) {
-            total += 1000;
-        }
-
         // Now set player1Turn to false to check our minimax agent's moves
         player1Turn = false;
         for (byte row = 0; row < 4; row++) {
@@ -481,6 +471,9 @@ public class Board {
         // Restore player1Turn to its value from the beginning of the method call
         player1Turn = hold;
         // and return our heuristic
+        if(total >= 3000){
+            System.out.println("what");
+        }
         return total;
     }
 }
