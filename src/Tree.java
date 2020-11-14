@@ -2,8 +2,14 @@ public class Tree {
     private final Node root;
     private int defaultDepth;
 
+    /**
+     * Default constructor
+     *
+     * @param root - the root node for our tree
+     */
     public Tree(Node root) {
         this.root = root;
+        // The depth of our tree will be 4
         defaultDepth = 4;
     }
 
@@ -27,19 +33,26 @@ public class Tree {
                 generateOneStepForFullTree(depth, currentDepth + 1, n);
             }
         }
-
     }
 
-
+    /**
+     * Generate one step of the tree from the given node
+     *
+     * @param depth        - max depth
+     * @param currentDepth - current depth
+     * @param currentNode  - node to expand
+     */
     public void generateOneStep(int depth, int currentDepth, Node currentNode) {
+        // If the depth we are currently at is less than our total depth then we want to generate its children
         if (currentDepth < depth) {
             if (!currentNode.wasExpanded()) {
+                // Make sure the current node hasn't been expanded already and make its children
                 currentNode.makeChildren();
             }
 
-            int numOfChildern = currentNode.getChildren().size();
-            for (int i = 0; i < numOfChildern; i++) {
-                generateOneStep(depth, currentDepth + 1, currentNode.getChildren().get(i));
+            // Loop through each child and recursively generate another step out
+            for (Node n : currentNode.getChildren()) {
+                generateOneStep(depth, currentDepth + 1, n);
             }
         }
 
@@ -57,6 +70,11 @@ public class Tree {
         root.makeChildrenOfRoot(defaultDepth, 0);
     }
 
+    /**
+     * Gets the current best move
+     *
+     * @return - a 3 length byte array containing the row, column, and direction of the best move
+     */
     public byte[] getBestMove2() {
         // Generate the tree to the default depth
         generateToDepth();
