@@ -11,6 +11,9 @@ public class Board {
      */
     private boolean player1Turn;
 
+    /**
+     * Default constructor, sets up an initial conga board
+     */
     public Board() {
         // Initial board setup, a 4x4 2d array to store all the squares
         stonePosition = new byte[4][4];
@@ -23,11 +26,23 @@ public class Board {
         player1Turn = true;
     }
 
+    /**
+     * Copies a board
+     *
+     * @param toMake - board to be copied
+     */
     public Board(Board toMake) {
+        // Copy the stone position and whose turn it is from the other board
         stonePosition = toMake.getStonePosition();
         player1Turn = toMake.getPlayer1Turn();
     }
 
+    /**
+     * Creates a new board with a given stonePosition, and player1Turn
+     *
+     * @param stonePosition - the stone position for the new board
+     * @param player1Turn   - whose turn it is, true for player 1 and false for player 2
+     */
     public Board(byte[][] stonePosition, boolean player1Turn) {
         this.stonePosition = stonePosition;
         this.player1Turn = player1Turn;
@@ -57,13 +72,17 @@ public class Board {
      * 3 -> valid move and can move 3 squares
      **/
     public byte validMove(byte row, byte col, byte dir) {
+        // Variables to store how many spaces we need to move
         byte spaceToMove = 0;
         byte squaresBeforeRunOut;
 
         if (player1Turn) {
+            // If we don't have any stones in the given square return 0
             if (stonePosition[row][col] <= 0) {
                 return spaceToMove;
             }
+            // Otherwise, determine how many squares we can put stones in
+            // and update squaresBeforeRunOut
             if (stonePosition[row][col] > 3) {
                 squaresBeforeRunOut = 3;
             } else if (stonePosition[row][col] > 1) {
@@ -72,9 +91,12 @@ public class Board {
                 squaresBeforeRunOut = 1;
             }
         } else {
+            // If we don't have any stones in the given square return 0
             if (stonePosition[row][col] >= 0) {
                 return spaceToMove;
             }
+            // Otherwise, determine how many squares we can put stones in
+            // and update squaresBeforeRunOut
             if (stonePosition[row][col] < -3) {
                 squaresBeforeRunOut = 3;
             } else if (stonePosition[row][col] < -1) {
@@ -96,6 +118,8 @@ public class Board {
                 if (doesOpponentPopulate(row, col)) {
                     return spaceToMove;
                 } else {
+                    // If it doesn't, increase the number of spaces we can move
+                    // and reduce the number of squares we can move
                     spaceToMove++;
                     squaresBeforeRunOut--;
                 }
@@ -109,6 +133,8 @@ public class Board {
                 if (doesOpponentPopulate(row, col)) {
                     return spaceToMove;
                 } else {
+                    // If it doesn't, increase the number of spaces we can move
+                    // and reduce the number of squares we can move
                     spaceToMove++;
                     squaresBeforeRunOut--;
                 }
@@ -122,6 +148,8 @@ public class Board {
                 if (doesOpponentPopulate(row, col)) {
                     return spaceToMove;
                 } else {
+                    // If it doesn't, increase the number of spaces we can move
+                    // and reduce the number of squares we can move
                     spaceToMove++;
                     squaresBeforeRunOut--;
                 }
@@ -135,6 +163,8 @@ public class Board {
                 if (doesOpponentPopulate(row, col)) {
                     return spaceToMove;
                 } else {
+                    // If it doesn't, increase the number of spaces we can move
+                    // and reduce the number of squares we can move
                     spaceToMove++;
                     squaresBeforeRunOut--;
                 }
@@ -149,6 +179,8 @@ public class Board {
                 if (doesOpponentPopulate(row, col)) {
                     return spaceToMove;
                 } else {
+                    // If it doesn't, increase the number of spaces we can move
+                    // and reduce the number of squares we can move
                     spaceToMove++;
                     squaresBeforeRunOut--;
                 }
@@ -163,6 +195,8 @@ public class Board {
                 if (doesOpponentPopulate(row, col)) {
                     return spaceToMove;
                 } else {
+                    // If it doesn't, increase the number of spaces we can move
+                    // and reduce the number of squares we can move
                     spaceToMove++;
                     squaresBeforeRunOut--;
                 }
@@ -177,6 +211,8 @@ public class Board {
                 if (doesOpponentPopulate(row, col)) {
                     return spaceToMove;
                 } else {
+                    // If it doesn't, increase the number of spaces we can move
+                    // and reduce the number of squares we can move
                     spaceToMove++;
                     squaresBeforeRunOut--;
                 }
@@ -191,17 +227,22 @@ public class Board {
                 if (doesOpponentPopulate(row, col)) {
                     return spaceToMove;
                 } else {
+                    // If it doesn't, increase the number of spaces we can move
+                    // and reduce the number of squares we can move
                     spaceToMove++;
                     squaresBeforeRunOut--;
                 }
             }
         }
 
-
         return spaceToMove;
     }
 
     /**
+     * Creates a new board, with the passed in move made on the current board
+     *
+     * @param row - the row of the stones we want to move
+     * @param col - the column of the stones we want to move
      * @param dir - the direction we want to move in
      *            0 -> up vertically
      *            1 -> down vertically
