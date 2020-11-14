@@ -11,8 +11,9 @@ public class Main {
         int totalMovesP1 = 0;
         int totalMovesP2 = 0;
         int stuckCounter = 0;
+        long totalAIMoveTime = 0;
 
-        final int gamesToRun = 10;
+        final int gamesToRun = 500;
 
         for (int i = 0; i < gamesToRun; i++) {
             int moveCount = 0;
@@ -36,7 +37,11 @@ public class Main {
                     totalMovesP1++;
                 } else {
                     // and AI Agent plays as player 2
+                    long start = System.currentTimeMillis();
                     aiAgent.move();
+                    long end = System.currentTimeMillis();
+                    //System.out.println("AI made a move in " + (end - start) + " milliseconds.");
+                    totalAIMoveTime += (end - start);
                     totalMovesP2++;
                 }
 
@@ -58,8 +63,9 @@ public class Main {
         System.out.println("Player 2 average moves = " + (totalMovesP2 / gamesToRun));
         System.out.println("Total moves made = " + (totalMovesP1 + totalMovesP2));
         System.out.println("The AI Agent got stuck " + stuckCounter + " times over " + gamesToRun + " games");
+        System.out.println("The AI took a total of " + totalAIMoveTime + " milliseconds, or " + totalAIMoveTime / 1000 + " seconds for its moves.");
+        System.out.println("This is an average of " + totalAIMoveTime / totalMovesP2 + " milliseconds per move.");
     }
-
 
 
 }
