@@ -10,33 +10,23 @@ public class Node {
     private boolean hasBeenExpanded;
     private final byte[] move;
     private int alpha;
-    private boolean hasMax;
     private int beta;
-    private boolean hasMin;
+    private Node_Counter counter;
 
-    public Node(Node parent, Board state, byte[] move) {
+    public Node(Node parent, Board state, byte[] move, Node_Counter counter) {
         this.parent = parent;
         this.state = state;
         this.move = move;
-        depth = (byte) (parent.getDepth() + 1);
-        children = new ArrayList<>(4000);
-        hasBeenExpanded = false;
-
-        alpha = Integer.MIN_VALUE;
-        beta = Integer.MAX_VALUE;
-    }
-
-    public Node(Node parent, Board state, byte[] move, int alpha, int beta) {
-        this.parent = parent;
-        this.state = state;
-        this.move = move;
-        this.alpha = alpha;
-        this.beta = beta;
         depth = parent.getDepth();
         //java wants this to be two lines not 1
         depth += 1;
         children = new ArrayList<>(200);
         hasBeenExpanded = false;
+
+        alpha = Integer.MIN_VALUE;
+        beta = Integer.MAX_VALUE;
+
+        this.counter = counter;
     }
 
     public Node(Board state) {
@@ -46,6 +36,7 @@ public class Node {
         depth = 0;
         children = new ArrayList<>(20);
         hasBeenExpanded = false;
+        counter = new Node_Counter();
     }
 
     public byte[] getMove() {
@@ -54,10 +45,6 @@ public class Node {
 
     public byte getDepth() {
         return depth;
-    }
-
-    public int getScore() {
-        return score;
     }
 
     /**
@@ -101,47 +88,6 @@ public class Node {
         }
     }
 
-    /**
-     * Generates the score for the current node using the Minimax algorithm
-     * TODO: implement alpha beta pruning
-     */
-    public int generateScore(int alpha, int beta) {
-        if (isLeaf()) {
-            score = state.getScore();
-            return score;
-        } else {
-            // even depth means max node
-            if (depth % 2 == 0) {
-                int best = Integer.MIN_VALUE;
-
-                for (Node n : children) {
-                    int val = n.generateScoreForFullTree(alpha, beta);
-                    best = Math.max(best, val);
-                    alpha = Math.max(alpha, best);
-
-                    if (beta <= alpha)
-                        break;
-                }
-                score = best;
-                return score;
-            } else {
-                // odd depth means min node
-                int best = Integer.MAX_VALUE;
-
-                for (Node n : children) {
-                    int val = n.generateScoreForFullTree(alpha, beta);
-                    best = Math.min(best, val);
-                    beta = Math.min(beta, best);
-
-                    if (beta <= alpha)
-                        break;
-                }
-                score = best;
-                return score;
-            }
-        }
-    }
-
     public Board getBoard() {
         return state;
     }
@@ -162,7 +108,7 @@ public class Node {
         List<byte[]> moves = getLegalMoves();
         // For each move that we have, we need to add a new child with the updated board state
         for (byte[] temp : moves) {
-            children.add(new Node(this, state.newBoard(temp[0], temp[1], temp[2]), temp));
+            children.add(new Node(this, state.newBoard(temp[0], temp[1], temp[2]), temp, counter));
         }
         // After we've made its children we can mark our current node as having been expanded
         hasBeenExpanded = true;
@@ -184,7 +130,7 @@ public class Node {
         int size = moves.size();
         for (int i = 0; i < size; i++) {
             byte[] temp = moves.get(i);
-            Node tempNode = new Node(this, state.newBoard(temp[0], temp[1], temp[2]), temp);
+            Node tempNode = new Node(this, state.newBoard(temp[0], temp[1], temp[2]), temp, counter);
             tempNode.makeChildrenMin(depth, currentDepth + 1);
             children.add(tempNode);
             if (children.get(i).getBeta() > alpha) {
@@ -194,11 +140,8 @@ public class Node {
 
 
         // After we've made its children we can mark our current node as having been expanded
-        hasBeenExpanded = true;
-
-
-        // null the state to save space in tree
-        state = null;
+        //hasBeenExpanded = true;
+        counter.addToVisitedNodeTotal();
     }
 
 
@@ -207,6 +150,7 @@ public class Node {
         // case of leaf node stop making children
         if (currentDepth == depth) {
             beta = state.getScore();
+            counter.updateMaxDepth(currentDepth);
         } else {
             // Get all the legal moves from the current node
             List<byte[]> moves = getLegalMoves();
@@ -215,12 +159,13 @@ public class Node {
             // if size is zero then is terminal node
             if (size == 0) {
                 beta = state.getScore();
+                counter.updateMaxDepth(currentDepth);
             }
             // else keep going down tree
             else {
                 for (int i = 0; beta > parent.alpha && i < size; i++) {
                     byte[] temp = moves.get(i);
-                    Node tempNode = new Node(this, state.newBoard(temp[0], temp[1], temp[2]), temp);
+                    Node tempNode = new Node(this, state.newBoard(temp[0], temp[1], temp[2]), temp, counter);
                     tempNode.makeChildrenMax(depth, currentDepth + 1);
                     children.add(tempNode);
                     if (children.get(i).getAlpha() < beta) {
@@ -242,6 +187,7 @@ public class Node {
 
         // null the state to save space in tree
         state = null;
+        counter.addToVisitedNodeTotal();
     }
 
 
@@ -249,7 +195,7 @@ public class Node {
         // case of leaf node stop making children
         if (currentDepth == depth) {
             alpha = state.getScore();
-            //System.out.println("        " + alpha);
+            counter.updateMaxDepth(currentDepth);
         } else {
             // Get all the legal moves from the current node
             List<byte[]> moves = getLegalMoves();
@@ -258,12 +204,13 @@ public class Node {
             // if size is zero then is terminal node
             if (size == 0) {
                 alpha = state.getScore();
+                counter.updateMaxDepth(currentDepth);
             }
             // else keep going down tree
             else {
                 for (int i = 0; alpha < parent.beta && i < size; i++) {
                     byte[] temp = moves.get(i);
-                    Node tempNode = new Node(this, state.newBoard(temp[0], temp[1], temp[2]), temp);
+                    Node tempNode = new Node(this, state.newBoard(temp[0], temp[1], temp[2]), temp, counter);
                     tempNode.makeChildrenMin(depth, currentDepth + 1);
                     children.add(tempNode);
                     if (children.get(i).getBeta() > alpha) {
@@ -286,6 +233,7 @@ public class Node {
 
         // null the state to save space in tree
         state = null;
+        counter.addToVisitedNodeTotal();
     }
 
     public boolean isLeaf() {
@@ -323,5 +271,17 @@ public class Node {
         }
 
         return moves;
+    }
+
+    /**
+     *
+     * @return - the counter list of 3 length byte arrays containing the moves
+     */
+    public Node_Counter getCounter() {
+        return counter;
+    }
+
+    public void countAdd1() {
+        counter.addToVisitedNodeTotal();
     }
 }

@@ -13,10 +13,13 @@ public class Main {
         int stuckCounter = 0;
         long totalAIMoveTime = 0;
 
-        final int gamesToRun = 500;
+
+        final int gamesToRun = 1;
 
         for (int i = 0; i < gamesToRun; i++) {
             int moveCount = 0;
+            long gameAIMoveTime = 0;
+
             while (true) {
                 if (moveCount > 300) {
                     System.out.println("We got stuck");
@@ -40,8 +43,9 @@ public class Main {
                     long start = System.currentTimeMillis();
                     aiAgent.move();
                     long end = System.currentTimeMillis();
-                    //System.out.println("AI made a move in " + (end - start) + " milliseconds.");
-                    totalAIMoveTime += (end - start);
+                    System.out.println("AI made a move in " + (end - start) + " milliseconds.");
+                    System.out.println();
+                    gameAIMoveTime += (end - start);
                     totalMovesP2++;
                 }
 
@@ -50,7 +54,13 @@ public class Main {
                 moveCount++;
                 //System.out.println("Finished move " + moveCount);
             }
-            conga.restartGame();
+
+
+            System.out.println("Total time was " + gameAIMoveTime + " milliseconds.");
+            aiAgent.printTotals();
+
+            totalAIMoveTime += gameAIMoveTime;
+
             randomAgent.setGame(conga.getGame());
             aiAgent.setGame(conga.getGame());
         }

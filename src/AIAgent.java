@@ -2,6 +2,11 @@ public class AIAgent {
 
     private Game game;
     private Tree tree;
+    private int totalNodes;
+    private int totalDepth;
+    private int totalPruned;
+
+
 
     /**
      * Default constructor
@@ -10,6 +15,9 @@ public class AIAgent {
      */
     public AIAgent(Game game) {
         this.game = game;
+        totalNodes = 0;
+        totalDepth = 0;
+        totalPruned = 0;
     }
 
     /**
@@ -20,7 +28,18 @@ public class AIAgent {
         tree = new Tree(new Node(game.getBoard()));
 
         // Choose the best move from the given tree
-        byte[] chosenMove = tree.getBestMove2();
+        byte[] chosenMove = tree.getBestMove();
+
+        Node_Counter temp1 = getCounter();
+        Node_Counter temp2 = getFullCounter();
+        System.out.println("Expaned " + temp1.getVisitedNodeTotal() + " nodes.");
+        System.out.println("Max depth is " + temp1.getMaxDepth() + ".");
+        System.out.println("Pruned " + (temp2.getVisitedNodeTotal() - temp1.getVisitedNodeTotal()) + " nodes.");
+
+        totalNodes += temp1.getVisitedNodeTotal();
+        totalDepth += temp1.getMaxDepth();
+        totalPruned += (temp2.getVisitedNodeTotal() - temp1.getVisitedNodeTotal());
+
 
         // Move the game to the next turn
         // in getBestMove we return a list of byte arrays, which each contain a row, column, and direction
@@ -29,5 +48,27 @@ public class AIAgent {
 
     public void setGame(Game game) {
         this.game = game;
+        totalNodes = 0;
+        totalDepth = 0;
+        totalPruned = 0;
+    }
+
+    public Node_Counter getCounter(){
+        return tree.getCounter();
+    }
+
+    public Node_Counter getFullCounter(){
+        return tree.getFullCounter();
+    }
+
+    public void printTotals(){
+        System.out.println("Total expaned " + totalNodes + " nodes.");
+        System.out.println("Total depth is " + totalDepth + ".");
+        System.out.println("Total pruned " + totalPruned + " nodes.");
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+
     }
 }

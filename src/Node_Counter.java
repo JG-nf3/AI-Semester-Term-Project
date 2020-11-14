@@ -1,27 +1,26 @@
-import java.util.ArrayList;
-
 public class Node_Counter {
     private int visitedNodeTotal;
-    private int prunedNodeTotal;
+    private int maxDepth;
 
     public Node_Counter() {
         visitedNodeTotal = 0;
-        prunedNodeTotal = 0;
     }
 
-    public void addToVisitedNodeTotal(int num){
-        visitedNodeTotal += num;
-    }
+    public void addToVisitedNodeTotal(){ visitedNodeTotal++; }
 
-    public void addToPrunedNodeTotal(){
-        prunedNodeTotal++;
+
+
+    public void updateMaxDepth(int depth){
+        if(depth > maxDepth){
+            maxDepth = depth;
+        }
     }
 
     public int getVisitedNodeTotal(){
         return visitedNodeTotal;
     }
 
-    public int getPrunedNodeTotal(){
-        return prunedNodeTotal;
+    public int getMaxDepth(){
+        return maxDepth;
     }
 }
