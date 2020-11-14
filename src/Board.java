@@ -9,7 +9,6 @@ public class Board {
     /**
      * true if it is player 1's turn, false otherwise
      */
-    //changed from: private final boolean player1Turn;
     private boolean player1Turn;
 
     public Board() {
@@ -471,7 +470,7 @@ public class Board {
         // Restore player1Turn to its value from the beginning of the method call
         player1Turn = hold;
         // and return our heuristic
-        if(total >= 3000){
+        if (total >= 3000) {
             System.out.println("what");
         }
         return total;
