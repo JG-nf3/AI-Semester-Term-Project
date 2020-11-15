@@ -1,6 +1,6 @@
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         UI conga = new UI();
 
         RandomAgent randomAgent = new RandomAgent(conga.getGame());
@@ -12,7 +12,7 @@ public class Main {
         int stuckCounter = 0;
         long totalAIMoveTime = 0;
 
-        final int gamesToRun = 1;
+        final int gamesToRun = 250;
 
         for (int i = 0; i < gamesToRun; i++) {
             int moveCount = 0;
@@ -41,8 +41,8 @@ public class Main {
                     long start = System.currentTimeMillis();
                     aiAgent.move();
                     long end = System.currentTimeMillis();
-                    System.out.println("AI made a move in " + (end - start) + " milliseconds.");
-                    System.out.println();
+//                    System.out.println("AI made a move in " + (end - start) + " milliseconds.");
+//                    System.out.println();
                     gameAIMoveTime += (end - start);
                     totalMovesP2++;
                 }
@@ -57,6 +57,7 @@ public class Main {
 
             totalAIMoveTime += gameAIMoveTime;
 
+            conga.restartGame();
             randomAgent.setGame(conga.getGame());
             aiAgent.setGame(conga.getGame());
         }

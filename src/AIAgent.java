@@ -30,9 +30,9 @@ public class AIAgent {
 
         Node_Counter temp1 = getCounter();
         Node_Counter temp2 = getFullCounter();
-        System.out.println("Expanded " + temp1.getVisitedNodeTotal() + " nodes.");
-        System.out.println("Max depth is " + temp1.getMaxDepth() + ".");
-        System.out.println("Pruned " + (temp2.getVisitedNodeTotal() - temp1.getVisitedNodeTotal()) + " nodes.");
+//        System.out.println("Expanded " + temp1.getVisitedNodeTotal() + " nodes.");
+//        System.out.println("Max depth is " + temp1.getMaxDepth() + ".");
+//        System.out.println("Pruned " + (temp2.getVisitedNodeTotal() - temp1.getVisitedNodeTotal()) + " nodes.");
 
         totalNodes += temp1.getVisitedNodeTotal();
         totalDepth += temp1.getMaxDepth();
