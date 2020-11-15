@@ -11,11 +11,6 @@ public class UI extends JFrame {
     private byte selectedRow;
     private byte selectedCol;
     private byte selectedDir;
-
-    public Game getGame() {
-        return game;
-    }
-
     private Game game;
 
     /**
@@ -257,5 +252,12 @@ public class UI extends JFrame {
     public void restartGame() {
         game = new Game();
         updateUIForNewTurn();
+    }
+
+    /**
+     * @return the current game
+     */
+    public Game getGame() {
+        return game;
     }
 }

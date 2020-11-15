@@ -33,6 +33,10 @@ public class RandomAgent {
         game.nextTurn(chosenMove[0], chosenMove[1], chosenMove[2]);
     }
 
+    /**
+     * makes the AI look at the input
+     * @param game
+     */
     public void setGame(Game game) {
         this.game = game;
     }

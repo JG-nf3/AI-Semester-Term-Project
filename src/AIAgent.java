@@ -28,11 +28,9 @@ public class AIAgent {
         // Choose the best move from the given tree
         byte[] chosenMove = tree.getBestMove();
 
+        // gets counters for data analysis
         Node_Counter temp1 = getCounter();
         Node_Counter temp2 = getFullCounter();
-//        System.out.println("Expanded " + temp1.getVisitedNodeTotal() + " nodes.");
-//        System.out.println("Max depth is " + temp1.getMaxDepth() + ".");
-//        System.out.println("Pruned " + (temp2.getVisitedNodeTotal() - temp1.getVisitedNodeTotal()) + " nodes.");
 
         totalNodes += temp1.getVisitedNodeTotal();
         totalDepth += temp1.getMaxDepth();
@@ -43,6 +41,10 @@ public class AIAgent {
         game.nextTurn(chosenMove[0], chosenMove[1], chosenMove[2]);
     }
 
+    /**
+     * makes the AI look at the input
+     * @param game
+     */
     public void setGame(Game game) {
         this.game = game;
         totalNodes = 0;
@@ -50,14 +52,23 @@ public class AIAgent {
         totalPruned = 0;
     }
 
+    /**
+     * Returns the Node_counter with pruning
+     */
     public Node_Counter getCounter() {
         return tree.getCounter();
     }
 
+    /**
+     * Returns the Node_counter without pruning
+     */
     public Node_Counter getFullCounter() {
         return tree.getFullCounter();
     }
 
+    /**
+     * prints out the data analysis for whole game
+     */
     public void printTotals() {
         System.out.println("Total expanded " + totalNodes + " nodes.");
         System.out.println("Total depth is " + totalDepth + ".");

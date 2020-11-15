@@ -10,6 +10,9 @@ public class Node_Counter {
         maxDepth = 0;
     }
 
+    /**
+     * when called adds 1 to visited nodes
+     */
     public void addToVisitedNodeTotal() {
         visitedNodeTotal++;
     }
@@ -25,10 +28,16 @@ public class Node_Counter {
         }
     }
 
+    /**
+     * @return visitedNodeTotal
+     */
     public int getVisitedNodeTotal() {
         return visitedNodeTotal;
     }
 
+    /**
+     * @return maxDepth
+     */
     public int getMaxDepth() {
         return maxDepth;
     }

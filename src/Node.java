@@ -49,63 +49,37 @@ public class Node {
         counter = new Node_Counter();
     }
 
+    /**
+     * @return the last move
+     */
     public byte[] getMove() {
         return move;
     }
 
+    /**
+     * @return the depth
+     */
     public byte getDepth() {
         return depth;
     }
 
-//    Initial alpha beta pruning implementation, no longer used
-//    /**
-//     * Generates the score for the current node using the Minimax algorithm with alpha beta pruning
-//     */
-//    public int generateScoreForFullTree(int alphaLocal, int betaLocal) {
-//        if (isLeaf()) {
-//            score = state.getScore();
-//            return score;
-//        } else {
-//            // even depth means max node
-//            if (depth % 2 == 0) {
-//                int best = Integer.MIN_VALUE;
-//
-//                for (Node n : children) {
-//                    int val = n.generateScoreForFullTree(alphaLocal, betaLocal);
-//                    best = Math.max(best, val);
-//                    alphaLocal = Math.max(alphaLocal, best);
-//
-//                    if (betaLocal <= alphaLocal)
-//                        break;
-//                }
-//                score = best;
-//                return score;
-//            } else {
-//                // odd depth means min node
-//                int best = Integer.MAX_VALUE;
-//
-//                for (Node n : children) {
-//                    int val = n.generateScoreForFullTree(alphaLocal, betaLocal);
-//                    best = Math.min(best, val);
-//                    betaLocal = Math.min(betaLocal, best);
-//
-//                    if (betaLocal <= alphaLocal)
-//                        break;
-//                }
-//                score = best;
-//                return score;
-//            }
-//        }
-//    }
-
+    /**
+     * @return the board
+     */
     public Board getBoard() {
         return state;
     }
 
+    /**
+     * @return whether the node has been expanded
+     */
     public boolean wasExpanded() {
         return hasBeenExpanded;
     }
 
+    /**
+     * @return the children
+     */
     public ArrayList<Node> getChildren() {
         return children;
     }
@@ -268,10 +242,16 @@ public class Node {
         counter.addToVisitedNodeTotal();
     }
 
+    /**
+     * @return Beta
+     */
     public int getBeta() {
         return beta;
     }
 
+    /**
+     * @return Alpha
+     */
     public int getAlpha() {
         return alpha;
     }
@@ -308,6 +288,9 @@ public class Node {
         return counter;
     }
 
+    /**
+     * tells teh Node_Counter to add 1
+     */
     public void countAdd1() {
         counter.addToVisitedNodeTotal();
     }

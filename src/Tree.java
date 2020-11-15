@@ -53,6 +53,7 @@ public class Tree {
 
     /**
      * Gets the current best move
+     * Does the Min-Max algorithm
      *
      * @return - a 3 length byte array containing the row, column, and direction of the best move
      */
@@ -70,10 +71,16 @@ public class Tree {
         return null;
     }
 
+    /**
+     * Returns the Node_counter with pruning
+     */
     public Node_Counter getCounter() {
         return root.getCounter();
     }
 
+    /**
+     * Returns the Node_counter without pruning
+     */
     public Node_Counter getFullCounter() {
         Tree temp = new Tree(new Node(root.getBoard()));
         temp.generateToDepthForFullTree();

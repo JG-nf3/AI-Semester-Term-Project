@@ -41,8 +41,9 @@ public class Main {
                     long start = System.currentTimeMillis();
                     aiAgent.move();
                     long end = System.currentTimeMillis();
-//                    System.out.println("AI made a move in " + (end - start) + " milliseconds.");
-//                    System.out.println();
+                    // uncomment code if you want to print out time per move
+                    // System.out.println("AI made a move in " + (end - start) + " milliseconds.");
+                    // System.out.println();
                     gameAIMoveTime += (end - start);
                     totalMovesP2++;
                 }
@@ -61,6 +62,7 @@ public class Main {
             totalAIMoveTime += gameAIMoveTime;
 
             // Don't restart game for our packaged JAR file, we'll only run 1 game
+            // uncomment code if you want to play more than 1 game
             //conga.restartGame();
             //randomAgent.setGame(conga.getGame());
             //aiAgent.setGame(conga.getGame());
@@ -78,4 +80,3 @@ public class Main {
         System.out.println("This is an average of " + totalAIMoveTime / totalMovesP2 + " milliseconds per move.");
     }
 }
-
