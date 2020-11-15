@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="15.062500000000057" y="22.0">Node_Counter</node>
+    <node x="111.51476934523808" y="259.0">Node</node>
+    <node x="400.1211681547619" y="1281.0">RandomAgent</node>
+    <node x="339.82593005952384" y="0.0">Board</node>
+    <node x="408.88593749999995" y="870.0">Game</node>
+    <node x="580.1211681547619" y="1127.0">UI</node>
+    <node x="147.17194940476188" y="1215.0">AIAgent</node>
+    <node x="10.5" y="848.0">Tree</node>
+    <node x="412.62499999999994" y="1616.0">Main</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="AIAgent" target="Tree">
+      <point x="-53.99999999999997" y="-126.5" />
+      <point x="201.1719494047619" y="1097.0" />
+      <point x="85.75" y="1097.0" />
+      <point x="-75.25" y="104.5" />
+    </edge>
+    <edge source="Node" target="Node_Counter">
+      <point x="-91.60000000000002" y="-269.5" />
+      <point x="134.41476934523806" y="239.0" />
+      <point x="118.06250000000006" y="239.0" />
+      <point x="0.0" y="82.5" />
+    </edge>
+    <edge source="AIAgent" target="Game">
+      <point x="54.00000000000003" y="-126.5" />
+      <point x="309.1719494047619" y="1087.0" />
+      <point x="424.60022321428573" y="1087.0" />
+      <point x="-94.28571428571428" y="82.5" />
+    </edge>
+    <edge source="Tree" target="Node_Counter">
+      <point x="-112.875" y="-104.5" />
+      <point x="48.125" y="823.0" />
+      <point x="66.85944940476185" y="823.0" />
+      <point x="66.85944940476185" y="239.0" />
+      <point x="76.86250000000007" y="239.0" />
+      <point x="-41.19999999999999" y="82.5" />
+    </edge>
+    <edge source="AIAgent" target="Node_Counter">
+      <point x="-89.99999999999997" y="-126.5" />
+      <point x="165.1719494047619" y="1107.0" />
+      <point x="0.0" y="1107.0" />
+      <point x="0.0" y="239.0" />
+      <point x="35.66250000000008" y="239.0" />
+      <point x="-82.39999999999998" y="82.5" />
+    </edge>
+    <edge source="Main" target="AIAgent">
+      <point x="-62.083333333333314" y="-27.0" />
+      <point x="425.04166666666663" y="1596.0" />
+      <point x="201.17194940476188" y="1596.0" />
+      <point x="-54.0" y="126.5" />
+    </edge>
+    <edge source="Main" target="UI">
+      <point x="37.25" y="-27.0" />
+      <point x="524.375" y="1586.0" />
+      <point x="629.1211681547619" y="1586.0" />
+      <point x="-49.0" y="214.5" />
+    </edge>
+    <edge source="Node" target="Board">
+      <point x="45.80000000000001" y="-269.5" />
+      <point x="271.8147693452381" y="229.0" />
+      <point x="367.9259300595238" y="229.0" />
+      <point x="-112.40000000000003" y="104.5" />
+    </edge>
+    <edge source="Game" target="Board">
+      <point x="73.33333333333337" y="-82.5" />
+      <point x="592.2192708333333" y="823.0" />
+      <point x="543.7707217261905" y="823.0" />
+      <point x="543.7707217261905" y="239.0" />
+      <point x="592.7259300595238" y="239.0" />
+      <point x="112.39999999999992" y="104.5" />
+    </edge>
+    <edge source="RandomAgent" target="Game">
+      <point x="-40.0" y="-60.5" />
+      <point x="440.1211681547619" y="1107.0" />
+      <point x="487.4573660714285" y="1107.0" />
+      <point x="-31.428571428571445" y="82.5" />
+    </edge>
+    <edge source="AIAgent" target="Node">
+      <point x="18.00000000000003" y="-126.5" />
+      <point x="273.1719494047619" y="1077.0" />
+      <point x="322.0" y="1077.0" />
+      <point x="322.0" y="823.0" />
+      <point x="311.88976934523805" y="823.0" />
+      <point x="85.875" y="269.5" />
+    </edge>
+    <edge source="Main" target="RandomAgent">
+      <point x="-12.416666666666629" y="-27.0" />
+      <point x="474.7083333333333" y="1576.0" />
+      <point x="440.1211681547619" y="1576.0" />
+      <point x="-40.0" y="60.5" />
+    </edge>
+    <edge source="UI" target="Game">
+      <point x="-65.33333333333337" y="-214.5" />
+      <point x="612.7878348214285" y="1107.0" />
+      <point x="550.3145089285714" y="1107.0" />
+      <point x="31.428571428571445" y="82.5" />
+    </edge>
+    <edge source="Tree" target="Node">
+      <point x="-37.625" y="-104.5" />
+      <point x="123.375" y="823.0" />
+      <point x="140.13976934523808" y="823.0" />
+      <point x="-85.875" y="269.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.5242603550295858" x="388.5" y="835.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
