@@ -1,6 +1,6 @@
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         UI conga = new UI();
 
         RandomAgent randomAgent = new RandomAgent(conga.getGame());
@@ -12,7 +12,7 @@ public class Main {
         int stuckCounter = 0;
         long totalAIMoveTime = 0;
 
-        final int gamesToRun = 10;
+        final int gamesToRun = 1;
 
         for (int i = 0; i < gamesToRun; i++) {
             int moveCount = 0;
@@ -50,6 +50,9 @@ public class Main {
                 // update the UI & moveCount
                 conga.updateUIForNewTurn();
                 moveCount++;
+
+                // Create a delay between moves so that the user can see the moves happening
+                Thread.sleep(200);
             }
 
             System.out.println("Total time was " + gameAIMoveTime + " milliseconds.");
@@ -57,9 +60,10 @@ public class Main {
 
             totalAIMoveTime += gameAIMoveTime;
 
-            conga.restartGame();
-            randomAgent.setGame(conga.getGame());
-            aiAgent.setGame(conga.getGame());
+            // Don't restart game for our packaged JAR file, we'll only run 1 game
+            //conga.restartGame();
+            //randomAgent.setGame(conga.getGame());
+            //aiAgent.setGame(conga.getGame());
         }
 
         System.out.println("Player 1 won " + player1Wins + " games out of " + gamesToRun);
