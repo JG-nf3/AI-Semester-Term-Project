@@ -4,14 +4,13 @@ import java.util.List;
 public class Node {
     private final Node parent;
     private final ArrayList<Node> children;
-    private byte depth;
+    private final byte depth;
     private Board state;
-    private int score;
     private boolean hasBeenExpanded;
     private final byte[] move;
     private int alpha;
     private int beta;
-    private Node_Counter counter;
+    private final Node_Counter counter;
 
     /**
      * Constructor
@@ -58,45 +57,46 @@ public class Node {
         return depth;
     }
 
-    /**
-     * Generates the score for the current node using the Minimax algorithm with alpha beta pruning
-     */
-    public int generateScoreForFullTree(int alphaLocal, int betaLocal) {
-        if (isLeaf()) {
-            score = state.getScore();
-            return score;
-        } else {
-            // even depth means max node
-            if (depth % 2 == 0) {
-                int best = Integer.MIN_VALUE;
-
-                for (Node n : children) {
-                    int val = n.generateScoreForFullTree(alphaLocal, betaLocal);
-                    best = Math.max(best, val);
-                    alphaLocal = Math.max(alphaLocal, best);
-
-                    if (betaLocal <= alphaLocal)
-                        break;
-                }
-                score = best;
-                return score;
-            } else {
-                // odd depth means min node
-                int best = Integer.MAX_VALUE;
-
-                for (Node n : children) {
-                    int val = n.generateScoreForFullTree(alphaLocal, betaLocal);
-                    best = Math.min(best, val);
-                    betaLocal = Math.min(betaLocal, best);
-
-                    if (betaLocal <= alphaLocal)
-                        break;
-                }
-                score = best;
-                return score;
-            }
-        }
-    }
+//    Initial alpha beta pruning implementation, no longer used
+//    /**
+//     * Generates the score for the current node using the Minimax algorithm with alpha beta pruning
+//     */
+//    public int generateScoreForFullTree(int alphaLocal, int betaLocal) {
+//        if (isLeaf()) {
+//            score = state.getScore();
+//            return score;
+//        } else {
+//            // even depth means max node
+//            if (depth % 2 == 0) {
+//                int best = Integer.MIN_VALUE;
+//
+//                for (Node n : children) {
+//                    int val = n.generateScoreForFullTree(alphaLocal, betaLocal);
+//                    best = Math.max(best, val);
+//                    alphaLocal = Math.max(alphaLocal, best);
+//
+//                    if (betaLocal <= alphaLocal)
+//                        break;
+//                }
+//                score = best;
+//                return score;
+//            } else {
+//                // odd depth means min node
+//                int best = Integer.MAX_VALUE;
+//
+//                for (Node n : children) {
+//                    int val = n.generateScoreForFullTree(alphaLocal, betaLocal);
+//                    best = Math.min(best, val);
+//                    betaLocal = Math.min(betaLocal, best);
+//
+//                    if (betaLocal <= alphaLocal)
+//                        break;
+//                }
+//                score = best;
+//                return score;
+//            }
+//        }
+//    }
 
     public Board getBoard() {
         return state;
@@ -257,7 +257,7 @@ public class Node {
             // After we've made its children we can mark our current node as having been expanded
             hasBeenExpanded = true;
         }
-        
+
         // update alpha of parent
         if (alpha < parent.beta) {
             parent.beta = alpha;
@@ -266,10 +266,6 @@ public class Node {
         // null the state to save space in tree
         state = null;
         counter.addToVisitedNodeTotal();
-    }
-
-    public boolean isLeaf() {
-        return children.size() == 0;
     }
 
     public int getBeta() {

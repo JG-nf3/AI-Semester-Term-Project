@@ -65,7 +65,7 @@ public class UI extends JFrame {
      * Initializes all the square buttons
      */
     private void setupSquare() {
-        // Initializes a 4x4 JButton arrray to store the squares
+        // Initializes a 4x4 JButton array to store the squares
         square = new JButton[4][4];
         for (int row = 0; row < square.length; row++) {
             for (int col = 0; col < square[row].length; col++) {

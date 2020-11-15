@@ -4,7 +4,7 @@ import java.util.Random;
 public class RandomAgent {
     // Our current game & a random number generator we'll use on every move
     private Game game;
-    private Random rng;
+    private final Random rng;
 
     /**
      * Default constructor
@@ -32,7 +32,7 @@ public class RandomAgent {
         // in getLegalMoves we return a list of byte arrays, which each contain a row, column, and direction
         game.nextTurn(chosenMove[0], chosenMove[1], chosenMove[2]);
     }
-    
+
     public void setGame(Game game) {
         this.game = game;
     }

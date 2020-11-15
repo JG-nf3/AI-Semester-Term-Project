@@ -1,6 +1,6 @@
 public class Tree {
-    private Node root;
-    private int defaultDepth;
+    private final Node root;
+    private final int defaultDepth;
 
     /**
      * Default constructor
@@ -73,7 +73,7 @@ public class Tree {
     public Node_Counter getCounter() {
         return root.getCounter();
     }
-    
+
     public Node_Counter getFullCounter() {
         Tree temp = new Tree(new Node(root.getBoard()));
         temp.generateToDepthForFullTree();
