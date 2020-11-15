@@ -12,7 +12,7 @@ public class Main {
         int stuckCounter = 0;
         long totalAIMoveTime = 0;
 
-        final int gamesToRun = 250;
+        final int gamesToRun = 10;
 
         for (int i = 0; i < gamesToRun; i++) {
             int moveCount = 0;

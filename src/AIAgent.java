@@ -37,8 +37,7 @@ public class AIAgent {
         totalNodes += temp1.getVisitedNodeTotal();
         totalDepth += temp1.getMaxDepth();
         totalPruned += (temp2.getVisitedNodeTotal() - temp1.getVisitedNodeTotal());
-
-
+        
         // Move the game to the next turn
         // in getBestMove we return a list of byte arrays, which each contain a row, column, and direction
         game.nextTurn(chosenMove[0], chosenMove[1], chosenMove[2]);

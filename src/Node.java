@@ -258,7 +258,7 @@ public class Node {
             hasBeenExpanded = true;
         }
 
-        // update alpha of parent
+        // update beta of parent
         if (alpha < parent.beta) {
             parent.beta = alpha;
         }
