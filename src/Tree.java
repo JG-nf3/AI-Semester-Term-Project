@@ -38,11 +38,15 @@ public class Tree {
 
     /**
      * Generate the tree from the root to the default depth
+     * This won't handle any pruning
      */
     public void generateToDepthForFullTree() {
         generateOneStepForFullTree(defaultDepth, 0, root);
     }
 
+    /**
+     * Generates the tree, using minimax w/ alpha beta
+     */
     public void generateToDepth() {
         root.makeChildrenOfRoot(defaultDepth, 0);
     }
@@ -69,7 +73,7 @@ public class Tree {
     public Node_Counter getCounter() {
         return root.getCounter();
     }
-
+    
     public Node_Counter getFullCounter() {
         Tree temp = new Tree(new Node(root.getBoard()));
         temp.generateToDepthForFullTree();

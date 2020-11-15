@@ -3,7 +3,6 @@ public class Main {
     public static void main(String[] args) {
         UI conga = new UI();
 
-
         RandomAgent randomAgent = new RandomAgent(conga.getGame());
         AIAgent aiAgent = new AIAgent(conga.getGame());
 
@@ -12,7 +11,6 @@ public class Main {
         int totalMovesP2 = 0;
         int stuckCounter = 0;
         long totalAIMoveTime = 0;
-
 
         final int gamesToRun = 1;
 
@@ -52,9 +50,7 @@ public class Main {
                 // update the UI & moveCount
                 conga.updateUIForNewTurn();
                 moveCount++;
-                //System.out.println("Finished move " + moveCount);
             }
-
 
             System.out.println("Total time was " + gameAIMoveTime + " milliseconds.");
             aiAgent.printTotals();
@@ -76,7 +72,5 @@ public class Main {
         System.out.println("The AI took a total of " + totalAIMoveTime + " milliseconds, or " + totalAIMoveTime / 1000 + " seconds for its moves.");
         System.out.println("This is an average of " + totalAIMoveTime / totalMovesP2 + " milliseconds per move.");
     }
-
-
 }
 

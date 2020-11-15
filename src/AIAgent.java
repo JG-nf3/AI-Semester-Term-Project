@@ -6,8 +6,6 @@ public class AIAgent {
     private int totalDepth;
     private int totalPruned;
 
-
-
     /**
      * Default constructor
      *
@@ -32,7 +30,7 @@ public class AIAgent {
 
         Node_Counter temp1 = getCounter();
         Node_Counter temp2 = getFullCounter();
-        System.out.println("Expaned " + temp1.getVisitedNodeTotal() + " nodes.");
+        System.out.println("Expanded " + temp1.getVisitedNodeTotal() + " nodes.");
         System.out.println("Max depth is " + temp1.getMaxDepth() + ".");
         System.out.println("Pruned " + (temp2.getVisitedNodeTotal() - temp1.getVisitedNodeTotal()) + " nodes.");
 
@@ -53,22 +51,21 @@ public class AIAgent {
         totalPruned = 0;
     }
 
-    public Node_Counter getCounter(){
+    public Node_Counter getCounter() {
         return tree.getCounter();
     }
 
-    public Node_Counter getFullCounter(){
+    public Node_Counter getFullCounter() {
         return tree.getFullCounter();
     }
 
-    public void printTotals(){
-        System.out.println("Total expaned " + totalNodes + " nodes.");
+    public void printTotals() {
+        System.out.println("Total expanded " + totalNodes + " nodes.");
         System.out.println("Total depth is " + totalDepth + ".");
         System.out.println("Total pruned " + totalPruned + " nodes.");
         System.out.println();
         System.out.println();
         System.out.println();
         System.out.println();
-
     }
 }
