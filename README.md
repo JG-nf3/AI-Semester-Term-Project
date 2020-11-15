@@ -16,7 +16,7 @@ notice that our program is modified to run a single game with a 200 ms delay bet
 you can properly see each move being made by both agents. Our program will also provide various statistics about the game
 after it completes in the command line interface you ran it from.
 
-## Running the Project
+## Running the Project from a provided JAR
 1. Download the folder on the University of Toledo OneDrive, containing this README file and an executable "Conga.jar".
 2. Move the folder to the desired location on your computer.
 3. Open a command prompt in the desired location, or navigate to the desired location in a command prompt.
